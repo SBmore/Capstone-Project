@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">BulletPoints</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Ad Mobs -->
+    <string name="admob_list_banner_unit_id">ca-app-pub-9605228635846962/5274120330</string>
+    <string name="admob_detail_banner_unit_id">ca-app-pub-9605228635846962/3518185539</string>
 </resources>
