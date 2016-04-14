@@ -1,7 +1,8 @@
-# ud862: Project 5: Make Your App Material
+# : Project 7 and 8: Capstone
 Final project for the Android App Developer Nanodegree at Udacity. Demonstrate the skills learned in the Nanodegree journey, and apply them to creating an original and unique app experience. By the end of this project, an app will have been completed that you can be submit to the Google Play Store for distribution.
 
 *Stage 1:* Design and plan the Capstone app. Upload design doc to repository.
+
 *Stage 2:* Build app.
 
 ##Project Overview
