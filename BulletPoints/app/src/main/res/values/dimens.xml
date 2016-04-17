@@ -4,7 +4,35 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
-    <dimen name="list_start">52dp</dimen>
-    <dimen name="list_end">52dp</dimen>
     <dimen name="toolbar_extended">128dp</dimen>
+
+    <dimen name="list_start_margin">52dp</dimen>
+    <dimen name="list_end_margin">52dp</dimen>
+
+    <dimen name="list_item_start_margin">0dp</dimen>
+    <dimen name="list_item_end_margin">0dp</dimen>
+    <dimen name="list_item_top_margin">24dp</dimen>
+    <dimen name="list_item_bottom_margin">0dp</dimen>
+
+    <dimen name="article_title_start">8dp</dimen>
+    <dimen name="article_title_end">8dp</dimen>
+    <dimen name="article_title_top">8dp</dimen>
+    <dimen name="article_title_bottom">8dp</dimen>
+
+    <dimen name="article_author_start">8dp</dimen>
+    <dimen name="article_author_end">8dp</dimen>
+    <dimen name="article_author_top">8dp</dimen>
+    <dimen name="article_author_bottom">8dp</dimen>
+
+    <!-- Elevation -->
+    <dimen name="card_elevation">2dp</dimen>
+
+
+    <integer name="title_max_lines">2</integer>
+    <integer name="author_max_lines">1</integer>
+
+
+    <!-- text -->
+    <dimen name="list_title_text_size">14sp</dimen>
+    <dimen name="list_subtitle_text_size">12sp</dimen>
 </resources>
