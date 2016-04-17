@@ -14,7 +14,7 @@ public class MainActivityFragment extends Fragment {
 
     private Typeface mRobotoReg;
     private Typeface mRobotoThin;
-    
+
 
     public MainActivityFragment() {
     }
