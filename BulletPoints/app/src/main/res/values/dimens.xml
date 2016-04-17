@@ -24,6 +24,10 @@
     <dimen name="article_author_top">8dp</dimen>
     <dimen name="article_author_bottom">8dp</dimen>
 
+    <dimen name="logo_start">52dp</dimen>
+    <dimen name="logo_end">52dp</dimen>
+    <dimen name="logo_bottom">4dp</dimen>
+
     <!-- Elevation -->
     <dimen name="card_elevation">2dp</dimen>
 
