@@ -3,6 +3,7 @@
     <string name="action_settings" translatable="true">Settings</string>
 
     <!-- Ad Mobs -->
+    <string name="admob_list_banner_unit_id_test" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <string name="admob_list_banner_unit_id" translatable="false">ca-app-pub-9605228635846962/5274120330</string>
     <string name="admob_detail_banner_unit_id" translatable="false">ca-app-pub-9605228635846962/3518185539</string>
 </resources>

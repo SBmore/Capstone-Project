@@ -14,6 +14,8 @@
     <dimen name="list_item_top_margin">24dp</dimen>
     <dimen name="list_item_bottom_margin">0dp</dimen>
 
+    <dimen name="list_advert_bottom_margin">16dp</dimen>
+
     <dimen name="article_title_start">8dp</dimen>
     <dimen name="article_title_end">8dp</dimen>
     <dimen name="article_title_top">8dp</dimen>
