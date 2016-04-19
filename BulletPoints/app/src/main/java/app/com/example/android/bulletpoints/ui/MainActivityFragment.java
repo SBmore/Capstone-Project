@@ -1,4 +1,4 @@
-package app.com.example.android.bulletpoints;
+package app.com.example.android.bulletpoints.ui;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+
+import app.com.example.android.bulletpoints.R;
 
 /**
  * A placeholder fragment containing a simple view.
