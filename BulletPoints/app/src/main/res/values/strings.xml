@@ -2,8 +2,13 @@
     <string name="app_name" translatable="false">BulletPoints</string>
     <string name="action_settings" translatable="true">Settings</string>
 
+    <string name="html_body_name" translatable="false">"#rich-snippet-article"</string>
+
     <!-- Ad Mobs -->
     <string name="admob_list_banner_unit_id_test" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <string name="admob_list_banner_unit_id" translatable="false">ca-app-pub-9605228635846962/5274120330</string>
     <string name="admob_detail_banner_unit_id" translatable="false">ca-app-pub-9605228635846962/3518185539</string>
+
+    <!-- errors -->
+    <string name="err_html_call_fail" translatable="false">Call for article HTML was unsuccessful</string>
 </resources>
