@@ -11,6 +11,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import app.com.example.android.bulletpoints.R;
+import app.com.example.android.bulletpoints.data.ArticleDataFetcher;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -38,6 +39,8 @@ public class MainActivityFragment extends Fragment {
                 .build();
         mAdView.loadAd(adRequest);
 
+        ArticleDataFetcher articleDataFetcher = new ArticleDataFetcher(getContext());
+        articleDataFetcher.execute("http://feeds.skynews.com/feeds/rss/world.xml");
         return root;
     }
 }

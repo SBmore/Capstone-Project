@@ -51,6 +51,8 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
             // get all the articles from the RSS feed
             for (int x = 0; x < list.size(); x += 1) {
                 items[x] = (RSSItem) list.get(x);
+                Log.v(TAG, items[x].getTitle());
+                Log.v(TAG, items[x].getThumbnails().get(0).toString());
             }
 
             // get the link to the full article
