@@ -19,12 +19,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
+import app.com.example.android.bulletpoints.R;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import app.com.example.android.bulletpoints.R;
 
 /**
  * Created by Steven on 19/04/2016.
@@ -52,7 +52,7 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
             for (int x = 0; x < list.size(); x += 1) {
                 items[x] = (RSSItem) list.get(x);
                 Log.v(TAG, items[x].getTitle());
-                Log.v(TAG, items[x].getThumbnails().get(0).toString());
+                Log.v(TAG, items[x].getLink().toString());
             }
 
             // get the link to the full article
@@ -84,7 +84,14 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
                         JsonParser jsonParser = new JsonParser();
                         JsonObject jo = (JsonObject)jsonParser.parse(json);
 
-                        output += json;
+                        // variable are to be put in db when it's created. Store here for now
+                        String title = jo.get("headline").getAsString();
+                        String description = jo.get("description").getAsString();
+                        String datePublished = jo.get("datePublished").getAsString();
+                        String imgUrl = jo.get("image").getAsString();
+                        String articleBody = jo.get("articleBody").getAsString();
+
+                        Log.v(TAG, title + " " + description);
 
                         //You can then save the output in your database
                     } else {
