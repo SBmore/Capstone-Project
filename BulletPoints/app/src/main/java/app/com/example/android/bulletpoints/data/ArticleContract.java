@@ -24,7 +24,7 @@ public class ArticleContract {
         @DataType(DataType.Type.TEXT) @NotNull
         String LINK = "link";
 
-        @DataType(DataType.Type.TEXT) @NotNull
+        @DataType(DataType.Type.INTEGER) @NotNull
         String PUB_DATE = "pub_date";
 
         @DataType(DataType.Type.TEXT) @NotNull
