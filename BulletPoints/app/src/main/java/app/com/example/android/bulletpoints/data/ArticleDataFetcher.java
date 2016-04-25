@@ -39,10 +39,15 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
     }
 
     protected org.mcsoxford.rss.RSSFeed doInBackground(String... urls) {
+        String title;
+        String description;
+        URL link;
+        long pubDate;
+        String imageUrl;
+
         try {
             URL url = new URL(urls[0]);
             RSSReader theRSSReader = new RSSReader();
-
             org.mcsoxford.rss.RSSFeed feed = theRSSReader.load(url.toString());
 
             List list = feed.getItems();
@@ -51,55 +56,48 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
             // get all the articles from the RSS feed
             for (int x = 0; x < list.size(); x += 1) {
                 items[x] = (RSSItem) list.get(x);
-                Log.v(TAG, items[x].getTitle());
-                Log.v(TAG, items[x].getLink().toString());
-            }
+                title = ((RSSItem) list.get(x)).getTitle();
+                description = ((RSSItem) list.get(x)).getDescription();
+                pubDate = ((RSSItem) list.get(x)).getPubDate().getTime();
+                link = new URL(((RSSItem) list.get(x)).getLink().toString());
 
-            // get the link to the full article
-            URL link = new URL(items[0].getLink().toString());
-            OkHttpClient client = new OkHttpClient();
+                // get the link to the full article
+                OkHttpClient client = new OkHttpClient();
 
-            Request request = new Request.Builder()
-                    .url(link)
-                    .build();
+                Request request = new Request.Builder()
+                        .url(link)
+                        .build();
 
-            client.newCall(request).enqueue(new Callback() {
-                String output = "";
-
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.e(TAG, e.toString());
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    if (response.isSuccessful()) {
-                        String elementName = mContext.getResources().getString(R.string.html_body_name);
-                        Document doc = Jsoup.parse(response.body().string());
-                        Element element = doc.select(elementName).first();
-                        String json = element.html();
-                        Gson gson = new Gson();
-                        gson.toJson(json);
-
-                        JsonParser jsonParser = new JsonParser();
-                        JsonObject jo = (JsonObject)jsonParser.parse(json);
-
-                        // variable are to be put in db when it's created. Store here for now
-                        String title = jo.get("headline").getAsString();
-                        String description = jo.get("description").getAsString();
-                        String datePublished = jo.get("datePublished").getAsString();
-                        String imgUrl = jo.get("image").getAsString();
-                        String articleBody = jo.get("articleBody").getAsString();
-
-                        Log.v(TAG, title + " " + description);
-
-                        //You can then save the output in your database
-                    } else {
-                        Log.e(TAG, mContext.getResources().getString(R.string.err_html_call_fail));
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Log.e(TAG, e.toString());
                     }
-                }
-            });
 
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.isSuccessful()) {
+                            String elementName = mContext.getResources().getString(R.string.html_body_name);
+                            Document doc = Jsoup.parse(response.body().string());
+                            Element element = doc.select(elementName).first();
+                            String json = element.html();
+                            Gson gson = new Gson();
+                            gson.toJson(json);
+
+                            JsonParser jsonParser = new JsonParser();
+                            JsonObject jo = (JsonObject) jsonParser.parse(json);
+
+                            // variable are to be put in db when it's created. Store here for now
+                            String title = jo.get("headline").getAsString();
+                            String imgUrl = jo.get("image").getAsString();
+                            String articleBody = jo.get("articleBody").getAsString();
+                        } else {
+                            Log.e(TAG, mContext.getResources().getString(R.string.err_html_call_fail));
+                        }
+                    }
+                });
+
+            }
 
             return feed;
         } catch (Exception e) {
@@ -107,6 +105,7 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
             return null;
         }
     }
+
     protected void onPostExecute(org.mcsoxford.rss.RSSFeed feed) {
         // TODO: check this.exception
         // TODO: write the feed to the database
