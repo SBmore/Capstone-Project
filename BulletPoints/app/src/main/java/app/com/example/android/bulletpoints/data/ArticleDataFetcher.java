@@ -67,7 +67,8 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
                 // temporary to test writing to the database
                 contentValues.put("title", title);
                 contentValues.put("description", description);
-                contentValues.put("pubDate", pubDate);
+                contentValues.put("pub_date", pubDate);
+                contentValues.put("img_url", link.toString());
                 contentValues.put("link", link.toString());
 
                 mContext.getContentResolver().insert(
