@@ -1,5 +1,6 @@
 package app.com.example.android.bulletpoints.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -53,6 +54,8 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
             List list = feed.getItems();
             RSSItem[] items = new RSSItem[list.size()];
 
+            ContentValues contentValues = new ContentValues(list.size());
+
             // get all the articles from the RSS feed
             for (int x = 0; x < list.size(); x += 1) {
                 items[x] = (RSSItem) list.get(x);
@@ -60,6 +63,17 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
                 description = ((RSSItem) list.get(x)).getDescription();
                 pubDate = ((RSSItem) list.get(x)).getPubDate().getTime();
                 link = new URL(((RSSItem) list.get(x)).getLink().toString());
+
+                // temporary to test writing to the database
+                contentValues.put("title", title);
+                contentValues.put("description", description);
+                contentValues.put("pubDate", pubDate);
+                contentValues.put("link", link.toString());
+
+                mContext.getContentResolver().insert(
+                        ArticleProvider.Articles.CONTENT_URI,
+                        contentValues
+                );
 
                 // get the link to the full article
                 OkHttpClient client = new OkHttpClient();

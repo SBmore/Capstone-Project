@@ -1,8 +1,10 @@
 package app.com.example.android.bulletpoints.ui;
 
+import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +14,14 @@ import com.google.android.gms.ads.AdView;
 
 import app.com.example.android.bulletpoints.R;
 import app.com.example.android.bulletpoints.data.ArticleDataFetcher;
+import app.com.example.android.bulletpoints.data.ArticleProvider;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
 
+    private final static String TAG = "MAIN_ACTIVITY_FRAGMENT";
     private Typeface mRobotoReg;
     private Typeface mRobotoThin;
 
@@ -41,6 +45,19 @@ public class MainActivityFragment extends Fragment {
 
         ArticleDataFetcher articleDataFetcher = new ArticleDataFetcher(getContext());
         articleDataFetcher.execute("http://feeds.skynews.com/feeds/rss/world.xml");
+
+        // temporary to check if data is being written to db
+        Cursor cursor = getContext().getContentResolver().query(
+                ArticleProvider.Articles.CONTENT_URI,
+                null, null, null, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Log.v(TAG, cursor.getString(0));
+            Log.v(TAG, cursor.getString(1));
+            cursor.moveToNext();
+        }
+
         return root;
     }
 }
