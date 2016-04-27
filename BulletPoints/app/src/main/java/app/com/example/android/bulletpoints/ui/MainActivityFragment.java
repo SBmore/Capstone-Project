@@ -1,5 +1,6 @@
 package app.com.example.android.bulletpoints.ui;
 
+import android.content.ContentResolver;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -47,7 +48,9 @@ public class MainActivityFragment extends Fragment {
         articleDataFetcher.execute("http://feeds.skynews.com/feeds/rss/world.xml");
 
         // temporary to check if data is being written to db
-        Cursor cursor = getContext().getContentResolver().query(
+        ContentResolver resolver = getContext().getContentResolver();
+
+        Cursor cursor = resolver.query(
                 ArticleProvider.Articles.CONTENT_URI,
                 null, null, null, null);
 

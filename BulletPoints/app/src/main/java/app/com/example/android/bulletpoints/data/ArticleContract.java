@@ -4,6 +4,7 @@ import net.simonvt.schematic.annotation.AutoIncrement;
 import net.simonvt.schematic.annotation.DataType;
 import net.simonvt.schematic.annotation.NotNull;
 import net.simonvt.schematic.annotation.PrimaryKey;
+import net.simonvt.schematic.annotation.Unique;
 
 /**
  * Created by Steven on 23/04/2016.
@@ -15,13 +16,13 @@ public class ArticleContract {
         @AutoIncrement
         String _ID = "_id";
 
-        @DataType(DataType.Type.TEXT) @NotNull
+        @DataType(DataType.Type.TEXT) @NotNull @Unique
         String TITLE = "title";
 
         @DataType(DataType.Type.TEXT)
         String DESCRIPTION = "description";
 
-        @DataType(DataType.Type.TEXT) @NotNull
+        @DataType(DataType.Type.TEXT) @NotNull @Unique
         String LINK = "link";
 
         @DataType(DataType.Type.INTEGER) @NotNull
