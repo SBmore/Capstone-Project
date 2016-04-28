@@ -1,5 +1,7 @@
 package app.com.example.android.bulletpoints.data;
 
+import android.support.annotation.Nullable;
+
 import net.simonvt.schematic.annotation.AutoIncrement;
 import net.simonvt.schematic.annotation.DataType;
 import net.simonvt.schematic.annotation.NotNull;
@@ -28,7 +30,7 @@ public class ArticleContract {
         @DataType(DataType.Type.INTEGER) @NotNull
         String PUB_DATE = "pub_date";
 
-        @DataType(DataType.Type.TEXT) @NotNull
+        @DataType(DataType.Type.TEXT) @Nullable
         String IMG_URL = "img_url";
     }
 }
