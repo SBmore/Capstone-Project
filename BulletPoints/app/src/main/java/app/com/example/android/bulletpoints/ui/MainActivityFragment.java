@@ -47,7 +47,7 @@ public class MainActivityFragment extends Fragment {
         ArticleDataFetcher articleDataFetcher = new ArticleDataFetcher(getContext());
         articleDataFetcher.execute("http://feeds.skynews.com/feeds/rss/world.xml");
 
-        // temporary to check if data is being written to db
+        // TODO: temporary to check if data is being written to db
         ContentResolver resolver = getContext().getContentResolver();
 
         Cursor cursor = resolver.query(

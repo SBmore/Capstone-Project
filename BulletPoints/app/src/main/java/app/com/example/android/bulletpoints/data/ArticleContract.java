@@ -9,7 +9,7 @@ import net.simonvt.schematic.annotation.PrimaryKey;
 import net.simonvt.schematic.annotation.Unique;
 
 /**
- * Created by Steven on 23/04/2016.
+ * Contract for the article Database
  */
 public class ArticleContract {
     public interface ArticleColumns {
