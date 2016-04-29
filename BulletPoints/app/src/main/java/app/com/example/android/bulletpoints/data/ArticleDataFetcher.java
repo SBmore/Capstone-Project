@@ -65,11 +65,11 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
                 link = new URL(((RSSItem) list.get(x)).getLink().toString());
 
                 // temporary to test writing to the database
-                contentValues.put("title", title);
-                contentValues.put("description", description);
-                contentValues.put("pub_date", pubDate);
-                contentValues.put("img_url", link.toString());
-                contentValues.put("link", link.toString());
+                contentValues.put(ArticleContract.ArticleColumns.TITLE, title);
+                contentValues.put(ArticleContract.ArticleColumns.DESCRIPTION, description);
+                contentValues.put(ArticleContract.ArticleColumns.PUB_DATE, pubDate);
+                contentValues.put(ArticleContract.ArticleColumns.IMG_URL, link.toString());
+                contentValues.put(ArticleContract.ArticleColumns.LINK, link.toString());
 
                 mContext.getContentResolver().insert(
                         ArticleProvider.Articles.CONTENT_URI,
