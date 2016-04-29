@@ -54,11 +54,18 @@ public class MainActivityFragment extends Fragment {
                 ArticleProvider.Articles.CONTENT_URI,
                 null, null, null, null);
 
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            Log.v(TAG, cursor.getString(0));
-            Log.v(TAG, cursor.getString(1));
-            cursor.moveToNext();
+        try {
+            cursor.moveToFirst();
+            Log.v(TAG, "Results returned: " + cursor.getCount());
+            while (!cursor.isAfterLast()) {
+                if (!cursor.isNull(6)) {
+                    Log.v(TAG, "Body: " + cursor.getString(6));
+                }
+                cursor.moveToNext();
+            }
+            cursor.close();
+        } catch (NullPointerException e) {
+            Log.e(TAG, e.toString());
         }
 
         return root;

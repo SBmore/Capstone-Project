@@ -2,6 +2,7 @@ package app.com.example.android.bulletpoints.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -71,10 +72,37 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
                 contentValues.put(ArticleContract.ArticleColumns.IMG_URL, link.toString());
                 contentValues.put(ArticleContract.ArticleColumns.LINK, link.toString());
 
-                mContext.getContentResolver().insert(
+                Cursor cursor = mContext.getContentResolver().query(
                         ArticleProvider.Articles.CONTENT_URI,
-                        contentValues
-                );
+                        new String[]{ArticleContract.ArticleColumns._ID},
+                        ArticleContract.ArticleColumns.TITLE + "= ?",
+                        new String[]{title},
+                        null);
+
+                boolean exists = false;
+                try {
+                    cursor.moveToFirst();
+                    exists = !cursor.isAfterLast();
+                    cursor.close();
+                } catch (NullPointerException e) {
+                    Log.e(TAG, e.toString());
+                }
+
+                if (exists) {
+                    int num =  mContext.getContentResolver().update(
+                            ArticleProvider.Articles.CONTENT_URI,
+                            contentValues,
+                            ArticleContract.ArticleColumns.TITLE + "= ?",
+                            new String[]{title}
+                    );
+                    Log.v(TAG, "Updated main: " + num);
+                } else {
+                    mContext.getContentResolver().insert(
+                            ArticleProvider.Articles.CONTENT_URI,
+                            contentValues
+                    );
+                }
+
 
                 // get the link to the full article
                 OkHttpClient client = new OkHttpClient();
@@ -106,6 +134,20 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
                             String title = jo.get("headline").getAsString();
                             String imgUrl = jo.get("image").getAsString();
                             String articleBody = jo.get("articleBody").getAsString();
+
+                            ContentValues values = new ContentValues();
+                            values.put(ArticleContract.ArticleColumns.IMG_URL, imgUrl);
+                            values.put(ArticleContract.ArticleColumns.BODY, articleBody);
+
+                           int num =  mContext.getContentResolver().update(
+                                    ArticleProvider.Articles.CONTENT_URI,
+                                    values,
+                                    ArticleContract.ArticleColumns.TITLE + "= ?",
+                                    new String[]{title}
+                            );
+
+                            Log.v(TAG, "Updated with body: " + num);
+
                         } else {
                             Log.e(TAG, mContext.getResources().getString(R.string.err_html_call_fail));
                         }
