@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import app.com.example.android.bulletpoints.R;
 import app.com.example.android.bulletpoints.ui.MainActivityFragment;
 
@@ -47,13 +49,21 @@ public class ArticleAdaptor extends RecyclerView.Adapter<ArticleAdaptor.ViewHold
     @Override
     public void onBindViewHolder(ArticleAdaptor.ViewHolder holder, int position) {
         this.cursor.moveToPosition(position);
-
+        String img_url =  this.cursor.getString(MainActivityFragment.COL_ARTICLE_IMG_URL);
         Log.v(TAG, "Adaptor: " + this.cursor.getString(MainActivityFragment.COL_ARTICLE_TITLE));
 
         holder.titleView.setText(this.cursor.getString(MainActivityFragment.COL_ARTICLE_TITLE));
         holder.titleView.setTypeface(this.robotoThin);
         holder.descriptionView.setText(this.cursor.getString(MainActivityFragment.COL_ARTICLE_DESCRIPTION));
         holder.descriptionView.setTypeface(this.robotoReg);
+
+        Glide.with(context).load(img_url).centerCrop().into(holder.thumbnailView);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        this.cursor.moveToPosition(position);
+        return this.cursor.getLong(MainActivityFragment.COL_ARTICLE_ID);
     }
 
     @Override
