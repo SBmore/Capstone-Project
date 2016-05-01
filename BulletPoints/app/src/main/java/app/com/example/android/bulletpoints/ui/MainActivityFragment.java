@@ -9,6 +9,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,6 +105,11 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         ArticleAdaptor articleAdaptor = new ArticleAdaptor(activity, data);
         articleAdaptor.setHasStableIds(true);
         mRecyclerView.setAdapter(articleAdaptor);
+
+        int columnCount = getResources().getInteger(R.integer.list_column_count);
+        StaggeredGridLayoutManager gridLayoutManager =
+                new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
     }
 
     @Override

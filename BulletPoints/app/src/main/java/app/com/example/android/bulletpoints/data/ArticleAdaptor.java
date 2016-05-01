@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import app.com.example.android.bulletpoints.ui.MainActivityFragment;
  * An adaptor to link the data from the cursor loader to the recycler view
  */
 public class ArticleAdaptor extends RecyclerView.Adapter<ArticleAdaptor.ViewHolder> {
+    private final static String TAG = "ARTICLE_ADAPTOR";
     private final Cursor cursor;
     private final Context context;
     private Typeface robotoReg;
@@ -27,6 +29,8 @@ public class ArticleAdaptor extends RecyclerView.Adapter<ArticleAdaptor.ViewHold
         robotoThin = Typeface.createFromAsset(context.getResources().getAssets(), "Roboto-Light.ttf");
         this.context = context;
         this.cursor = cursor;
+
+        Log.v(TAG, "Adaptor constructor called");
     }
 
     @Override
@@ -35,12 +39,16 @@ public class ArticleAdaptor extends RecyclerView.Adapter<ArticleAdaptor.ViewHold
         final ViewHolder viewHolder = new ViewHolder(view);
         // TODO: Add on click listeners to the view
 
+        Log.v(TAG, "Adaptor view holder created");
+
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(ArticleAdaptor.ViewHolder holder, int position) {
         this.cursor.moveToPosition(position);
+
+        Log.v(TAG, "Adaptor: " + this.cursor.getString(MainActivityFragment.COL_ARTICLE_TITLE));
 
         holder.titleView.setText(this.cursor.getString(MainActivityFragment.COL_ARTICLE_TITLE));
         holder.titleView.setTypeface(this.robotoThin);
