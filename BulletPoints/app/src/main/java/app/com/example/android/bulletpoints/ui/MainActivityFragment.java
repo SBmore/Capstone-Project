@@ -28,7 +28,7 @@ import app.com.example.android.bulletpoints.data.ArticleProvider;
  */
 public class MainActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private final static String TAG = "MAIN_ACTIVITY_FRAGMENT";
+    private final static String TAG = MainActivityFragment.class.getSimpleName();
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 

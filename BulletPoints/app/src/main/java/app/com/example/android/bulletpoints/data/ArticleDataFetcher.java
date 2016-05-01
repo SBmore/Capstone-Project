@@ -32,7 +32,7 @@ import okhttp3.Response;
  * Created by Steven on 19/04/2016.
  */
 public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
-    private final static String TAG = "ARTICLE_DATA_FETCHER";
+    private final static String TAG = ArticleDataFetcher.class.getSimpleName();
     private Context mContext;
     private Exception exception;
 
