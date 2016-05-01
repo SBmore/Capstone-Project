@@ -45,7 +45,6 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
         String description;
         URL link;
         long pubDate;
-        String imageUrl;
 
         try {
             URL url = new URL(urls[0]);
@@ -80,12 +79,11 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
                         null);
 
                 boolean exists = false;
-                try {
+
+                if (cursor != null) {
                     cursor.moveToFirst();
                     exists = !cursor.isAfterLast();
                     cursor.close();
-                } catch (NullPointerException e) {
-                    Log.e(TAG, e.toString());
                 }
 
                 if (exists) {
