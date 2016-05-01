@@ -7,10 +7,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -28,6 +30,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     private final static String TAG = "MAIN_ACTIVITY_FRAGMENT";
     private RecyclerView mRecyclerView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private static final String[] ARTICLE_COLUMNS = {
             ArticleContract.ArticleColumns._ID,
@@ -54,6 +57,13 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe_refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
 
         // Banner Ad
         AdView mAdView = (AdView) root.findViewById(R.id.adView);
@@ -67,6 +77,13 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
         getLoaderManager().initLoader(0, null, this);
         return root;
+    }
+
+    private void refresh() {
+        // TODO: refresh the data in the recycler view
+        CharSequence text = "Refreshing";
+        Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     @Override
