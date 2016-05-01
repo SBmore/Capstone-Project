@@ -52,13 +52,11 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
             org.mcsoxford.rss.RSSFeed feed = theRSSReader.load(url.toString());
 
             List list = feed.getItems();
-            RSSItem[] items = new RSSItem[list.size()];
 
             ContentValues contentValues = new ContentValues(list.size());
 
             // get all the articles from the RSS feed
             for (int x = 0; x < list.size(); x += 1) {
-                items[x] = (RSSItem) list.get(x);
                 title = ((RSSItem) list.get(x)).getTitle();
                 description = ((RSSItem) list.get(x)).getDescription();
                 pubDate = ((RSSItem) list.get(x)).getPubDate().getTime();
