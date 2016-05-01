@@ -15,16 +15,17 @@
     <dimen name="list_item_bottom_margin">0dp</dimen>
 
     <dimen name="list_advert_bottom_margin">16dp</dimen>
+    <dimen name="article_height">184dp</dimen>
 
     <dimen name="article_title_start">8dp</dimen>
     <dimen name="article_title_end">8dp</dimen>
     <dimen name="article_title_top">8dp</dimen>
-    <dimen name="article_title_bottom">8dp</dimen>
+    <dimen name="article_title_bottom">0dp</dimen>
 
-    <dimen name="article_author_start">8dp</dimen>
-    <dimen name="article_author_end">8dp</dimen>
-    <dimen name="article_author_top">8dp</dimen>
-    <dimen name="article_author_bottom">8dp</dimen>
+    <dimen name="article_description_start">8dp</dimen>
+    <dimen name="article_description_end">8dp</dimen>
+    <dimen name="article_description_top">0dp</dimen>
+    <dimen name="article_description_bottom">8dp</dimen>
 
     <dimen name="logo_start">52dp</dimen>
     <dimen name="logo_end">52dp</dimen>
