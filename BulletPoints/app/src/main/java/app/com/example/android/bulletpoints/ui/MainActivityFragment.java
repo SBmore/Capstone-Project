@@ -2,6 +2,7 @@ package app.com.example.android.bulletpoints.ui;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
@@ -32,7 +33,9 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     private final static String TAG = MainActivityFragment.class.getSimpleName();
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private static Bundle mListState;
 
+    private static final String LAYOUT_STATE_KEY = "layout_state_key";
     private static final String[] ARTICLE_COLUMNS = {
             ArticleContract.ArticleColumns._ID,
             ArticleContract.ArticleColumns.TITLE,
@@ -73,11 +76,31 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 .build();
         mAdView.loadAd(adRequest);
 
-        ArticleDataFetcher articleDataFetcher = new ArticleDataFetcher(getContext());
-        articleDataFetcher.execute("http://feeds.skynews.com/feeds/rss/world.xml");
+        if (savedInstanceState == null) {
+            ArticleDataFetcher articleDataFetcher = new ArticleDataFetcher(getContext());
+            articleDataFetcher.execute("http://feeds.skynews.com/feeds/rss/world.xml");
+        }
 
         getLoaderManager().initLoader(0, null, this);
         return root;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mListState = new Bundle();
+        Parcelable listState = mRecyclerView.getLayoutManager().onSaveInstanceState();
+        mListState.putParcelable(LAYOUT_STATE_KEY, listState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mListState != null) {
+            Parcelable listState = mListState.getParcelable(LAYOUT_STATE_KEY);
+            mRecyclerView.getLayoutManager().onRestoreInstanceState(listState);
+        }
     }
 
     private void refresh() {
