@@ -1,6 +1,7 @@
 package app.com.example.android.bulletpoints.data;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import app.com.example.android.bulletpoints.R;
+import app.com.example.android.bulletpoints.ui.DetailActivity;
 import app.com.example.android.bulletpoints.ui.MainActivityFragment;
 
 /**
@@ -40,6 +42,13 @@ public class ArticleAdaptor extends RecyclerView.Adapter<ArticleAdaptor.ViewHold
         View view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
         final ViewHolder viewHolder = new ViewHolder(view);
         // TODO: Add on click listeners to the view
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailActivity.class);
+                context.startActivity(intent);
+            }
+        });
 
         Log.v(TAG, "Adaptor view holder created");
 
