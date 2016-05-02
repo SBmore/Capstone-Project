@@ -1,0 +1,30 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.CollapsingToolbarLayout
+        android:id="@+id/collapsing_toolbar"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+        <ImageView
+            android:contentDescription="@string/app_name"
+            android:layout_gravity="bottom"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:paddingBottom="@dimen/logo_bottom"
+            android:paddingEnd="@dimen/logo_end"
+            android:paddingLeft="@dimen/logo_start"
+            android:paddingRight="@dimen/logo_end"
+            android:paddingStart="@dimen/logo_start"
+            android:paddingTop="@dimen/logo_top"
+            android:src="@mipmap/logo" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_collapseMode="pin" />
+    </android.support.design.widget.CollapsingToolbarLayout>
+</merge>

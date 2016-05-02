@@ -30,6 +30,7 @@
     <dimen name="logo_start">52dp</dimen>
     <dimen name="logo_end">52dp</dimen>
     <dimen name="logo_bottom">4dp</dimen>
+    <dimen name="logo_top">0dp</dimen>
 
     <!-- Elevation -->
     <dimen name="card_elevation">2dp</dimen>

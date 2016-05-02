@@ -1,0 +1,15 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:contentDescription="@string/app_name"
+        android:paddingBottom="@dimen/logo_bottom"
+        android:paddingEnd="@dimen/logo_end"
+        android:paddingLeft="@dimen/logo_start"
+        android:paddingRight="@dimen/logo_end"
+        android:paddingStart="@dimen/logo_start"
+        android:paddingTop="@dimen/logo_top"
+        android:src="@mipmap/logo" />
+</merge>

@@ -1,0 +1,15 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="toolbar_extended">@dimen/wrap_content</dimen>
+    <item name="wrap_content" format="integer" type="dimen">-2</item>
+
+    <dimen name="list_start_margin">40dp</dimen>
+    <dimen name="list_end_margin">40dp</dimen>
+
+    <dimen name="list_item_start_margin">12dp</dimen>
+    <dimen name="list_item_end_margin">12dp</dimen>
+
+    <dimen name="logo_top">4dp</dimen>
+
+    <integer name="list_column_count">2</integer>
+</resources>
