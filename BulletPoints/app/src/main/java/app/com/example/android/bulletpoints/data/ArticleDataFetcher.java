@@ -43,6 +43,7 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
     protected org.mcsoxford.rss.RSSFeed doInBackground(String... urls) {
         String title;
         String description;
+        String thumbnail;
         URL link;
         long pubDate;
 
@@ -61,13 +62,7 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
                 description = ((RSSItem) list.get(x)).getDescription();
                 pubDate = ((RSSItem) list.get(x)).getPubDate().getTime();
                 link = new URL(((RSSItem) list.get(x)).getLink().toString());
-
-                // temporary to test writing to the database
-                contentValues.put(ArticleContract.ArticleColumns.TITLE, title);
-                contentValues.put(ArticleContract.ArticleColumns.DESCRIPTION, description);
-                contentValues.put(ArticleContract.ArticleColumns.PUB_DATE, pubDate);
-                contentValues.put(ArticleContract.ArticleColumns.IMG_URL, link.toString());
-                contentValues.put(ArticleContract.ArticleColumns.LINK, link.toString());
+                thumbnail = ((RSSItem) list.get(x)).getThumbnails().get(0).toString();
 
                 Cursor cursor = mContext.getContentResolver().query(
                         ArticleProvider.Articles.CONTENT_URI,
@@ -84,6 +79,11 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
                     cursor.close();
                 }
 
+                contentValues.put(ArticleContract.ArticleColumns.DESCRIPTION, description);
+                contentValues.put(ArticleContract.ArticleColumns.PUB_DATE, pubDate);
+                // add default low res thumbnail in case the full size image doesn't load
+                contentValues.put(ArticleContract.ArticleColumns.IMG_URL, thumbnail);
+
                 if (exists) {
                     int num =  mContext.getContentResolver().update(
                             ArticleProvider.Articles.CONTENT_URI,
@@ -93,12 +93,13 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
                     );
                     Log.v(TAG, "Updated main: " + num);
                 } else {
+                    contentValues.put(ArticleContract.ArticleColumns.TITLE, title);
+                    contentValues.put(ArticleContract.ArticleColumns.LINK, link.toString());
                     mContext.getContentResolver().insert(
                             ArticleProvider.Articles.CONTENT_URI,
                             contentValues
                     );
                 }
-
 
                 // get the link to the full article
                 OkHttpClient client = new OkHttpClient();
@@ -130,6 +131,8 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
                             String title = jo.get("headline").getAsString();
                             String imgUrl = jo.get("image").getAsString();
                             String articleBody = jo.get("articleBody").getAsString();
+
+                            Log.v(TAG, "Updated img: " + imgUrl);
 
                             ContentValues values = new ContentValues();
                             values.put(ArticleContract.ArticleColumns.IMG_URL, imgUrl);
