@@ -11,4 +11,7 @@
 
     <!-- errors -->
     <string name="err_html_call_fail" translatable="false">Call for article HTML was unsuccessful</string>
+
+    <!-- RSS sources -->
+    <string name="rss_sky_news_world" translatable="false">http://feeds.skynews.com/feeds/rss/world.xml</string>
 </resources>

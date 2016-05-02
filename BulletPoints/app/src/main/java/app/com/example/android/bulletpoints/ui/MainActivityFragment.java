@@ -14,7 +14,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -33,6 +32,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     private final static String TAG = MainActivityFragment.class.getSimpleName();
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private ArticleAdaptor mArticleAdaptor;
     private static Bundle mListState;
 
     private static final String LAYOUT_STATE_KEY = "layout_state_key";
@@ -77,8 +77,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         mAdView.loadAd(adRequest);
 
         if (savedInstanceState == null) {
-            ArticleDataFetcher articleDataFetcher = new ArticleDataFetcher(getContext());
-            articleDataFetcher.execute("http://feeds.skynews.com/feeds/rss/world.xml");
+            fetchData();
         }
 
         getLoaderManager().initLoader(0, null, this);
@@ -104,10 +103,9 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     }
 
     private void refresh() {
-        // TODO: refresh the data in the recycler view
-        CharSequence text = "Refreshing";
-        Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
-        toast.show();
+        mSwipeRefreshLayout.setRefreshing(true);
+        fetchData();
+        mArticleAdaptor.notifyDataSetChanged();
     }
 
     @Override
@@ -125,18 +123,25 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         FragmentActivity activity = getActivity();
-        ArticleAdaptor articleAdaptor = new ArticleAdaptor(activity, data);
-        articleAdaptor.setHasStableIds(true);
-        mRecyclerView.setAdapter(articleAdaptor);
+        mArticleAdaptor = new ArticleAdaptor(activity, data);
+        mArticleAdaptor.setHasStableIds(true);
+        mRecyclerView.setAdapter(mArticleAdaptor);
 
         int columnCount = getResources().getInteger(R.integer.list_column_count);
         StaggeredGridLayoutManager gridLayoutManager =
                 new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(gridLayoutManager);
+
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mRecyclerView.setAdapter(null);
+    }
+
+    public void fetchData() {
+        ArticleDataFetcher articleDataFetcher = new ArticleDataFetcher(getContext());
+        articleDataFetcher.execute(getString(R.string.rss_sky_news_world));
     }
 }
