@@ -9,11 +9,14 @@
     <string name="admob_list_banner_unit_id" translatable="false">ca-app-pub-9605228635846962/5274120330</string>
     <string name="admob_detail_banner_unit_id" translatable="false">ca-app-pub-9605228635846962/3518185539</string>
 
-    <!-- errors -->
+    <!-- Errors -->
     <string name="err_html_call_fail" translatable="false">Call for article HTML was unsuccessful</string>
 
-    <!-- RSS sources -->
+    <!-- RSSSources -->
     <string name="rss_sky_news_world" translatable="false">http://feeds.skynews.com/feeds/rss/world.xml</string>
+
+    <!--Content Descriptions -->
+    <string name="fab_description" translatable="true">View quick actions</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
