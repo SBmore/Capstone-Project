@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 
 import app.com.example.android.bulletpoints.R;
 import app.com.example.android.bulletpoints.ui.DetailActivity;
+import app.com.example.android.bulletpoints.ui.DetailActivityFragment;
 import app.com.example.android.bulletpoints.ui.MainActivityFragment;
 
 /**
@@ -41,11 +42,13 @@ public class ArticleAdaptor extends RecyclerView.Adapter<ArticleAdaptor.ViewHold
     public ArticleAdaptor.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
         final ViewHolder viewHolder = new ViewHolder(view);
-        // TODO: Add on click listeners to the view
+
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra(DetailActivityFragment.EXTRA_ID,
+                        getItemId(viewHolder.getAdapterPosition()));
                 context.startActivity(intent);
             }
         });
