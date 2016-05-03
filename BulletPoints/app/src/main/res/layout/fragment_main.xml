@@ -42,7 +42,7 @@
         android:layout_gravity="bottom"
         android:layout_marginBottom="@dimen/list_advert_bottom_margin"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/admob_list_banner_unit_id">
+        ads:adUnitId="@string/admob_list_banner_unit_id_test">
 
     </com.google.android.gms.ads.AdView>
 </android.support.design.widget.CoordinatorLayout>
