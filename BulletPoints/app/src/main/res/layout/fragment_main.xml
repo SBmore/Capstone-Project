@@ -36,13 +36,13 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
+        android:id="@+id/listAdView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginBottom="@dimen/list_advert_bottom_margin"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/admob_list_banner_unit_id_test">
+        ads:adUnitId="@string/admob_list_banner_unit_id">
 
     </com.google.android.gms.ads.AdView>
 </android.support.design.widget.CoordinatorLayout>

@@ -70,7 +70,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         });
 
         // Banner Ad
-        AdView mAdView = (AdView) root.findViewById(R.id.adView);
+        AdView mAdView = (AdView) root.findViewById(R.id.listAdView);
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();

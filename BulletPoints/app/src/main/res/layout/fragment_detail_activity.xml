@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/detail_coordinator_layout"
     android:layout_width="match_parent"
@@ -12,15 +13,33 @@
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/share_fab"
-        android:layout_width="@dimen/fab_image_width"
-        android:layout_height="@dimen/fab_image_width"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="@dimen/fab_margin"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginStart="@dimen/fab_margin"
-        android:contentDescription="@string/fab_description"
-        android:elevation="@dimen/fab_elevation"
-        android:src="@drawable/plus" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/share_fab"
+            android:layout_width="@dimen/fab_image_width"
+            android:layout_height="@dimen/fab_image_width"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:contentDescription="@string/fab_description"
+            android:elevation="@dimen/fab_elevation"
+            android:src="@drawable/plus" />
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/detailAdView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/list_advert_bottom_margin"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/admob_detail_banner_unit_id">
+
+        </com.google.android.gms.ads.AdView>
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
