@@ -7,16 +7,86 @@
     android:layout_height="match_parent"
     tools:context="app.com.example.android.bulletpoints.ui.DetailActivityFragment">
 
-    <android.support.design.widget.CollapsingToolbarLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="256dp">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <ImageView
-            android:id="@+id/article_photo"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content">
 
-    </android.support.design.widget.CollapsingToolbarLayout>
+            <ImageView
+                android:id="@+id/article_photo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/detail_photo_height" />
+
+            <LinearLayout
+                android:id="@+id/title_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/article_photo"
+                android:background="@color/colorPrimary"
+                android:elevation="@dimen/bulletpoint_elevation"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/detail_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="@dimen/detail_bar_text_margin"
+                    android:paddingLeft="@dimen/detail_bar_text_margin"
+                    android:paddingRight="@dimen/detail_bar_text_margin"
+                    android:paddingStart="@dimen/detail_bar_text_margin"
+                    android:paddingTop="@dimen/detail_bar_title_top"
+                    android:text="It's Cold Outside"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/detail_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/detail_bar_subtitle_bottom"
+                    android:paddingEnd="@dimen/detail_bar_text_margin"
+                    android:paddingLeft="@dimen/detail_bar_text_margin"
+                    android:paddingRight="@dimen/detail_bar_text_margin"
+                    android:paddingStart="@dimen/detail_bar_text_margin"
+                    android:text="By Steven Blakemore"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title_bar"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/bulletpoint_margin"
+                    android:layout_marginLeft="@dimen/bulletpoint_margin"
+                    android:layout_marginRight="@dimen/bulletpoint_margin"
+                    android:layout_marginStart="@dimen/bulletpoint_margin"
+                    android:layout_marginBottom="@dimen/bulletpoint_block_bottom"
+                    android:elevation="@dimen/bulletpoint_elevation"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/bulletpoint_item" />
+
+                    <include layout="@layout/bulletpoint_item" />
+
+                    <include layout="@layout/bulletpoint_item" />
+
+                    <include layout="@layout/bulletpoint_item" />
+
+                    <include layout="@layout/bulletpoint_item" />
+
+                </LinearLayout>
+            </FrameLayout>
+        </RelativeLayout>
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
