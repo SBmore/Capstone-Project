@@ -110,7 +110,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String sortOrder = ArticleContract.ArticleColumns.PUB_DATE + " ASC";
+        String sortOrder = ArticleContract.ArticleColumns.PUB_DATE + " DESC";
 
         return new CursorLoader(getActivity(),
                 ArticleProvider.Articles.CONTENT_URI,
