@@ -39,7 +39,6 @@
                     android:paddingRight="@dimen/detail_bar_text_margin"
                     android:paddingStart="@dimen/detail_bar_text_margin"
                     android:paddingTop="@dimen/detail_bar_title_top"
-                    android:text="It's Cold Outside"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -51,7 +50,6 @@
                     android:paddingLeft="@dimen/detail_bar_text_margin"
                     android:paddingRight="@dimen/detail_bar_text_margin"
                     android:paddingStart="@dimen/detail_bar_text_margin"
-                    android:text="By Steven Blakemore"
                     android:textColor="@color/white" />
             </LinearLayout>
 

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
@@ -18,6 +19,22 @@ import app.com.example.android.bulletpoints.data.ArticleProvider;
 
 public class DetailActivityFragment extends Fragment {
     public final static String EXTRA_ID = "extra_id";
+    private static final String[] ARTICLE_COLUMNS = {
+            ArticleContract.ArticleColumns._ID,
+            ArticleContract.ArticleColumns.TITLE,
+            ArticleContract.ArticleColumns.DESCRIPTION,
+            ArticleContract.ArticleColumns.LINK,
+            ArticleContract.ArticleColumns.PUB_DATE,
+            ArticleContract.ArticleColumns.IMG_URL
+    };
+
+    // These are the indices for the columns in ArticleContract
+    public static final int COL_ARTICLE_ID = 0;
+    public static final int COL_ARTICLE_TITLE = 1;
+    public static final int COL_ARTICLE_DESCRIPTION = 2;
+    public static final int COL_ARTICLE_LINK = 3;
+    public static final int COL_ARTICLE_PUB_DATE = 4;
+    public static final int COL_ARTICLE_IMG_URL = 5;
 
     public DetailActivityFragment() {
         // Required empty public constructor
@@ -43,15 +60,22 @@ public class DetailActivityFragment extends Fragment {
         if (id > -1) {
             Cursor cursor = getContext().getContentResolver().query(
                     ArticleProvider.Articles.CONTENT_URI,
-                    new String[]{ArticleContract.ArticleColumns.IMG_URL},
+                    ARTICLE_COLUMNS,
                     ArticleContract.ArticleColumns._ID + "= ?",
                     new String[]{Long.toString(id)},
                     null);
 
             if (cursor != null) {
                 cursor.moveToFirst();
-                String img_url = cursor.getString(0);
-                ImageView view = (ImageView) getActivity().findViewById(R.id.article_photo);
+                String img_url = cursor.getString(COL_ARTICLE_IMG_URL);
+                String title = cursor.getString(COL_ARTICLE_TITLE);
+                String subtitle = new java.util.Date(cursor.getLong(COL_ARTICLE_PUB_DATE)).toString();
+                TextView titleTextView = (TextView) root.findViewById(R.id.detail_title);
+                TextView descriptionTextView = (TextView) root.findViewById(R.id.detail_subtitle);
+                ImageView view = (ImageView) root.findViewById(R.id.article_photo);
+
+                titleTextView.setText(title);
+                descriptionTextView.setText(subtitle);
                 Glide.with(getContext()).load(img_url).centerCrop().into(view);
                 cursor.close();
             }
