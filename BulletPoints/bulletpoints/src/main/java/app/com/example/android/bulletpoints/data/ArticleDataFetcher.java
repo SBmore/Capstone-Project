@@ -22,6 +22,7 @@ import java.net.URL;
 import java.util.List;
 
 import app.com.example.android.bulletpoints.R;
+import app.com.example.android.textbulletpointer.BulletPointWizard;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -134,9 +135,17 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
 
                             Log.v(TAG, "Updated img: " + imgUrl);
 
+                            BulletPointWizard bulletPointWizard = new BulletPointWizard();
+                            String[] bulletPoints = bulletPointWizard.getBulletPoints(articleBody);
+
                             ContentValues values = new ContentValues();
                             values.put(ArticleContract.ArticleColumns.IMG_URL, imgUrl);
                             values.put(ArticleContract.ArticleColumns.BODY, articleBody);
+                            values.put(ArticleContract.ArticleColumns.BULLETPOINT_1, bulletPoints[0]);
+                            values.put(ArticleContract.ArticleColumns.BULLETPOINT_2, bulletPoints[1]);
+                            values.put(ArticleContract.ArticleColumns.BULLETPOINT_3, bulletPoints[2]);
+                            values.put(ArticleContract.ArticleColumns.BULLETPOINT_4, bulletPoints[3]);
+                            values.put(ArticleContract.ArticleColumns.BULLETPOINT_5, bulletPoints[4]);
 
                            int num =  mContext.getContentResolver().update(
                                     ArticleProvider.Articles.CONTENT_URI,
