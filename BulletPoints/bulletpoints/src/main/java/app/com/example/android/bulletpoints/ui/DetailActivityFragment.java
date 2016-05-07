@@ -16,7 +16,6 @@ import com.google.android.gms.ads.AdView;
 import app.com.example.android.bulletpoints.R;
 import app.com.example.android.bulletpoints.data.ArticleContract;
 import app.com.example.android.bulletpoints.data.ArticleProvider;
-import app.com.example.android.textbulletpointer.BulletPointWizard;
 
 public class DetailActivityFragment extends Fragment {
     public final static String EXTRA_ID = "extra_id";
@@ -81,9 +80,6 @@ public class DetailActivityFragment extends Fragment {
                 cursor.close();
             }
         }
-
-        BulletPointWizard bulletPointWizard = new BulletPointWizard();
-        String[][] bulletPoints = bulletPointWizard.getBulletPoints();
 
         // Banner Ad
         AdView mAdView = (AdView) root.findViewById(R.id.detailAdView);
