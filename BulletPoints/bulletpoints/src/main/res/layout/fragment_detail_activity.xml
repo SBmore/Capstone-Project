@@ -71,15 +71,15 @@
                     android:background="@color/white"
                     android:orientation="vertical">
 
-                    <include layout="@layout/bulletpoint_item" />
+                    <include layout="@layout/bulletpoint_item" android:id="@+id/bulletpoint_1" />
 
-                    <include layout="@layout/bulletpoint_item" />
+                    <include layout="@layout/bulletpoint_item" android:id="@+id/bulletpoint_2" />
 
-                    <include layout="@layout/bulletpoint_item" />
+                    <include layout="@layout/bulletpoint_item" android:id="@+id/bulletpoint_3" />
 
-                    <include layout="@layout/bulletpoint_item" />
+                    <include layout="@layout/bulletpoint_item" android:id="@+id/bulletpoint_4" />
 
-                    <include layout="@layout/bulletpoint_item" />
+                    <include layout="@layout/bulletpoint_item" android:id="@+id/bulletpoint_5" />
 
                 </LinearLayout>
             </FrameLayout>
