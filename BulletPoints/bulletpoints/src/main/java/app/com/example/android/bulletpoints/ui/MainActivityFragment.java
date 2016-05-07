@@ -88,8 +88,10 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     public void onPause() {
         super.onPause();
         mListState = new Bundle();
-        Parcelable listState = mRecyclerView.getLayoutManager().onSaveInstanceState();
-        mListState.putParcelable(LAYOUT_STATE_KEY, listState);
+        if (mRecyclerView.getLayoutManager() != null) {
+            Parcelable listState = mRecyclerView.getLayoutManager().onSaveInstanceState();
+            mListState.putParcelable(LAYOUT_STATE_KEY, listState);
+        }
     }
 
     @Override
