@@ -1,9 +1,15 @@
 package app.com.example.android.bulletpoints.ui;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -22,6 +28,10 @@ import app.com.example.android.bulletpoints.data.ArticleProvider;
 
 public class DetailActivityFragment extends Fragment {
     public final static String EXTRA_ID = "extra_id";
+    private final static String SHARE_HASHTAG = "#BulletPoints";
+    private ShareActionProvider mShareActionProvider;
+    private String mArticleShareText;
+
     private static final String[] ARTICLE_COLUMNS = {
             ArticleContract.ArticleColumns._ID,
             ArticleContract.ArticleColumns.TITLE,
@@ -51,12 +61,24 @@ public class DetailActivityFragment extends Fragment {
     public static final int COL_BULLETPOINT_5 = 10;
 
     public DetailActivityFragment() {
-        // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.detail_main, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_share);
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+
+        if (mArticleShareText != null) {
+            mShareActionProvider.setShareIntent(createShareIntent());
+        }
     }
 
     @Override
@@ -83,6 +105,7 @@ public class DetailActivityFragment extends Fragment {
                 cursor.moveToFirst();
                 String img_url = cursor.getString(COL_ARTICLE_IMG_URL);
                 String title = cursor.getString(COL_ARTICLE_TITLE);
+                String articleLink = cursor.getString(COL_ARTICLE_LINK);
                 String subtitle = new java.util.Date(cursor.getLong(COL_ARTICLE_PUB_DATE)).toString();
                 TextView titleTextView = (TextView) root.findViewById(R.id.detail_title);
                 TextView descriptionTextView = (TextView) root.findViewById(R.id.detail_subtitle);
@@ -93,6 +116,13 @@ public class DetailActivityFragment extends Fragment {
                 descriptionTextView.setText(subtitle);
                 Glide.with(getContext()).load(img_url).centerCrop().into(view);
                 cursor.close();
+
+                // TODO: make sure that the share text is 140 characters or less to work with twitter
+                mArticleShareText = title + " " + articleLink;
+                // If onCreateOptionsMenu has already happened, we need to update the share intent now.
+                if (mShareActionProvider != null) {
+                    mShareActionProvider.setShareIntent(createShareIntent());
+                }
             }
         }
 
@@ -127,5 +157,12 @@ public class DetailActivityFragment extends Fragment {
         }
 
         return map;
+    }
+
+    private Intent createShareIntent() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, mArticleShareText + " " + SHARE_HASHTAG);
+        return shareIntent;
     }
 }
