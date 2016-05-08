@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.com.example.android.bulletpoints.R;
+import app.com.example.android.bulletpoints.Utilities;
 import app.com.example.android.bulletpoints.data.ArticleContract;
 import app.com.example.android.bulletpoints.data.ArticleProvider;
 
@@ -118,7 +119,7 @@ public class DetailActivityFragment extends Fragment {
                 cursor.close();
 
                 // TODO: make sure that the share text is 140 characters or less to work with twitter
-                mArticleShareText = title + " " + articleLink;
+                mArticleShareText = Utilities.formatShareText(title, articleLink, SHARE_HASHTAG);
                 // If onCreateOptionsMenu has already happened, we need to update the share intent now.
                 if (mShareActionProvider != null) {
                     mShareActionProvider.setShareIntent(createShareIntent());
@@ -162,7 +163,7 @@ public class DetailActivityFragment extends Fragment {
     private Intent createShareIntent() {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, mArticleShareText + " " + SHARE_HASHTAG);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, mArticleShareText);
         return shareIntent;
     }
 }

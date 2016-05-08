@@ -31,4 +31,29 @@ public class Utilities {
             return null;
         }
     }
+
+    /**
+     * Take in the three elements that make up the share text and format them to ensure that they
+     * stay 140 characters or under to ensure the share text works with twitter
+     *
+     * @param text    main text that explains what is being shared
+     * @param link    a url as a string that should have been shortened
+     * @param hashtag the hashtag to add onto the end
+     * @return the formatted share text (140 characters or less)
+     */
+    public static String formatShareText(String text, String link, String hashtag) {
+        int lengthLimit = 140;
+        String shareText = link + " " + hashtag;
+
+        int characters = (text + " " + shareText).length();
+
+        if (characters > lengthLimit) {
+            int otherLen = shareText.length();
+
+            text = text.substring(0, lengthLimit - otherLen - 4) + "...";
+        }
+
+        shareText = text + " " + shareText;
+        return shareText;
+    }
 }
