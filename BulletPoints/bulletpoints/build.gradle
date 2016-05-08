@@ -61,7 +61,9 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.google.android.gms:play-services-analytics:8.4.0'
     compile 'com.google.android.gms:play-services-ads:8.4.0'
-    compile 'com.google.apis:google-api-services-urlshortener:v1-rev44-1.22.0'
+    compile ('com.google.apis:google-api-services-urlshortener:v1-rev44-1.22.0') {
+        exclude module: 'httpclient'
+    }
 }
 
 apply plugin: 'com.google.gms.google-services'
