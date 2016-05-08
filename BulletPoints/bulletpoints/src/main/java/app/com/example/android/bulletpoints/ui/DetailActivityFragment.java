@@ -13,6 +13,9 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import app.com.example.android.bulletpoints.R;
 import app.com.example.android.bulletpoints.data.ArticleContract;
 import app.com.example.android.bulletpoints.data.ArticleProvider;
@@ -85,7 +88,7 @@ public class DetailActivityFragment extends Fragment {
                 TextView descriptionTextView = (TextView) root.findViewById(R.id.detail_subtitle);
                 ImageView view = (ImageView) root.findViewById(R.id.article_photo);
 
-                setBulletPoints(root, cursor);
+                setBulletpoints(root, cursor);
                 titleTextView.setText(title);
                 descriptionTextView.setText(subtitle);
                 Glide.with(getContext()).load(img_url).centerCrop().into(view);
@@ -103,41 +106,26 @@ public class DetailActivityFragment extends Fragment {
         return root;
     }
 
-    private void setBulletPoints(View root, Cursor cursor) {
-        String bulletPoint1 = cursor.getString(COL_BULLETPOINT_1);
-        String bulletPoint2 = cursor.getString(COL_BULLETPOINT_2);
-        String bulletPoint3 = cursor.getString(COL_BULLETPOINT_3);
-        String bulletPoint4 = cursor.getString(COL_BULLETPOINT_4);
-        String bulletPoint5 = cursor.getString(COL_BULLETPOINT_5);
+    private void setBulletpoints(View root, Cursor cursor) {
+        Map<String, View> bulletpointMap = bulletpointMapper(cursor, root);
 
-        if (bulletPoint1 != null) {
-            View bulletPointView1 = root.findViewById(R.id.bulletpoint_1);
-            TextView bulletPointText1 = (TextView) bulletPointView1.findViewById(R.id.bulletpoint_text);
-            bulletPointText1.setText(bulletPoint1);
+        for (Map.Entry<String, View> entry : bulletpointMap.entrySet()) {
+            TextView bpText = (TextView) entry.getValue().findViewById(R.id.bulletpoint_text);
+            bpText.setText(entry.getKey());
+        }
+    }
+
+    private Map<String, View> bulletpointMapper(Cursor cursor, View root) {
+        int bulletCount = COL_BULLETPOINT_5 - COL_BULLETPOINT_1 - 1;
+        String bulletIdBase = "bulletpoint_";
+        Map<String, View> map = new HashMap<>(bulletCount);
+
+        for (int i = 1; i <= bulletCount; i += 1) {
+            String bulletId = bulletIdBase + i;
+            int resourceId = getResources().getIdentifier(bulletId, "id", getContext().getPackageName());
+            map.put(cursor.getString(i + COL_BULLETPOINT_1 - 1), root.findViewById(resourceId));
         }
 
-        if (bulletPoint2 != null) {
-            View bulletPointView2 = root.findViewById(R.id.bulletpoint_2);
-            TextView bulletPointText2 = (TextView) bulletPointView2.findViewById(R.id.bulletpoint_text);
-            bulletPointText2.setText(bulletPoint2);
-        }
-
-        if (bulletPoint3 != null) {
-            View bulletPointView3 = root.findViewById(R.id.bulletpoint_3);
-            TextView bulletPointText3 = (TextView) bulletPointView3.findViewById(R.id.bulletpoint_text);
-            bulletPointText3.setText(bulletPoint3);
-        }
-
-        if (bulletPoint4 != null) {
-            View bulletPointView4 = root.findViewById(R.id.bulletpoint_4);
-            TextView bulletPointText4 = (TextView) bulletPointView4.findViewById(R.id.bulletpoint_text);
-            bulletPointText4.setText(bulletPoint4);
-        }
-
-        if (bulletPoint5 != null) {
-            View bulletPointView5 = root.findViewById(R.id.bulletpoint_5);
-            TextView bulletPointText5 = (TextView) bulletPointView5.findViewById(R.id.bulletpoint_text);
-            bulletPointText5.setText(bulletPoint5);
-        }
+        return map;
     }
 }
