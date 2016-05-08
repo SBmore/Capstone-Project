@@ -22,6 +22,7 @@ import java.net.URL;
 import java.util.List;
 
 import app.com.example.android.bulletpoints.R;
+import app.com.example.android.bulletpoints.Utilities;
 import app.com.example.android.textbulletpointer.BulletPointWizard;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -95,7 +96,8 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, RSSFeed> {
                     Log.v(TAG, "Updated main: " + num);
                 } else {
                     contentValues.put(ArticleContract.ArticleColumns.TITLE, title);
-                    contentValues.put(ArticleContract.ArticleColumns.LINK, link.toString());
+                    contentValues.put(ArticleContract.ArticleColumns.LINK,
+                            Utilities.shortenUrl(mContext, link.toString()));
                     mContext.getContentResolver().insert(
                             ArticleProvider.Articles.CONTENT_URI,
                             contentValues

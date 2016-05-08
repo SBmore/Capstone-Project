@@ -9,6 +9,9 @@
     <string name="admob_list_banner_unit_id" translatable="false">ca-app-pub-9605228635846962/5274120330</string>
     <string name="admob_detail_banner_unit_id" translatable="false">ca-app-pub-9605228635846962/3518185539</string>
 
+    <!-- Google Url Shortener -->
+    <string name="url_shortener_api_key" translatable="false">AIzaSyBxNbLMVIVPSB7VUA9YB4DYacYuHJ63rbY</string>
+
     <!-- Errors -->
     <string name="err_html_call_fail" translatable="false">Call for article HTML was unsuccessful</string>
 
@@ -19,5 +22,4 @@
     <string name="fab_description" translatable="true">View quick actions</string>
 
     <string name="bulletpoint" translatable="false">•</string>
-    <string name="test_bacon" translatable="false">Leberkas biltong beef ribs landjaeger fatback short ribs picanha swine bacon meatball kevin salami pork chop tenderloin.</string>
 </resources>
