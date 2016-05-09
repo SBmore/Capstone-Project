@@ -1,7 +1,13 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_detail_activity"
-    android:name="app.com.example.android.bulletpoints.ui.DetailActivityFragment"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:layout="@layout/fragment_detail_activity" />
+    android:id="@+id/activity_detail">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/fragment_detail_activity"
+        android:name="app.com.example.android.bulletpoints.ui.DetailActivityFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_detail_activity" />
+</FrameLayout>

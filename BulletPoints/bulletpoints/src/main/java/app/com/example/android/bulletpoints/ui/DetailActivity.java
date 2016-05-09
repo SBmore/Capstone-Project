@@ -17,7 +17,7 @@ public class DetailActivity extends AppCompatActivity {
             fragment.setArguments(getIntent().getExtras());
 
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_detail_activity, fragment)
+                    .add(R.id.activity_detail, fragment)
                     .commit();
         }
     }
