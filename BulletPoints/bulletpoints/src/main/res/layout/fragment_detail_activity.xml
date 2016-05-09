@@ -86,33 +86,6 @@
         </RelativeLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom"
-        android:orientation="vertical">
+    <include layout="@layout/ad_fab" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/goto_doc_fab"
-            android:layout_width="@dimen/fab_image_width"
-            android:layout_height="@dimen/fab_image_width"
-            android:layout_gravity="bottom|end"
-            android:layout_marginBottom="@dimen/fab_margin"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginStart="@dimen/fab_margin"
-            android:contentDescription="@string/fab_description"
-            android:elevation="@dimen/fab_elevation"
-            android:src="@drawable/launch" />
-
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/detailAdView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/list_advert_bottom_margin"
-            ads:adSize="BANNER"
-            ads:adUnitId="@string/admob_list_banner_unit_id_test">
-
-        </com.google.android.gms.ads.AdView>
-    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
