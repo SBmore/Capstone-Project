@@ -40,15 +40,20 @@ public class BulletPointWizard {
      * @return the      bulletpoints as an array
      */
     public String[] getBulletPoints(String body) {
+        int maxBullets = 5;
+        int minStringLength = 50;
+        
         body = removeHtmlArtifacts(body);
         String[] words = body.replaceAll(CHAR_REPLACE_REGEX, "").toLowerCase().split(WORD_SPLIT_REGEX);
-        ArrayList<String> sentences = getSentences(body);
+
+        ArrayList<String> sentences = filterShortStrings(getSentences(body), minStringLength, maxBullets);
         String firstBulletpoint = sentences.get(0);
-        String fifthBulletpoint = sentences.get(sentences.size() - 1);
+        String lastBulletpoint = sentences.get(sentences.size() - 1);
+
         sentences.remove(0);
         sentences.remove(sentences.size() - 1);
 
-        String[] bulletPoints = {firstBulletpoint, "", "", "", fifthBulletpoint};
+        String[] bulletPoints = {firstBulletpoint, "", "", "", lastBulletpoint};
 
         // get unique words and score them based on occurrences in text body
         Map<String, Integer> wordScores = countOccurrences(words);
@@ -183,5 +188,26 @@ public class BulletPointWizard {
             }
         }
         return body;
+    }
+
+    /**
+     * Loops through an ArrayList of strings and removes all strings that are shorter than the
+     * provided minLen, unless doing so would reduce the number of strings to less than minStr.
+     *
+     * @param strings    an ArrayList of strings that need to be filtered
+     * @param minLen     the minimum length a string should be to not be removed
+     * @param minStr     the minimum amount of strings that should be left in the array
+     * @return
+     */
+    private ArrayList<String> filterShortStrings(ArrayList<String> strings, int minLen, int minStr) {
+        if (strings.size() > minStr) {
+            for (int i = 0; i < strings.size(); i += 1) {
+                if (strings.get(i).length() < minLen && strings.size() - 1 > minStr) {
+                    strings.remove(i);
+                }
+            }
+        }
+
+        return strings;
     }
 }
