@@ -31,6 +31,7 @@ import app.com.example.android.bulletpoints.data.ArticleProvider;
 public class DetailActivityFragment extends Fragment {
     public final static String EXTRA_ID = "extra_id";
     private final static String SHARE_HASHTAG = "#BulletPoints";
+    public static final int MAX_BULLETPOINTS = 5;
     private ShareActionProvider mShareActionProvider;
     private String mArticleShareText;
 
@@ -157,11 +158,10 @@ public class DetailActivityFragment extends Fragment {
     }
 
     private Map<String, View> bulletpointMapper(Cursor cursor, View root) {
-        int bulletCount = COL_BULLETPOINT_5 - COL_BULLETPOINT_1 - 1;
         String bulletIdBase = "bulletpoint_";
-        Map<String, View> map = new HashMap<>(bulletCount);
+        Map<String, View> map = new HashMap<>(MAX_BULLETPOINTS);
 
-        for (int i = 1; i <= bulletCount; i += 1) {
+        for (int i = 1; i <= MAX_BULLETPOINTS; i += 1) {
             String bulletId = bulletIdBase + i;
             int resourceId = getResources().getIdentifier(bulletId, "id", getContext().getPackageName());
             map.put(cursor.getString(i + COL_BULLETPOINT_1 - 1), root.findViewById(resourceId));
