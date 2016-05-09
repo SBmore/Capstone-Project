@@ -19,7 +19,7 @@
     <string name="rss_sky_news_world" translatable="false">http://feeds.skynews.com/feeds/rss/world.xml</string>
 
     <!--Content Descriptions -->
-    <string name="fab_description" translatable="true">View quick actions</string>
+    <string name="fab_description" translatable="true">View full article</string>
 
     <string name="bulletpoint" translatable="false">•</string>
 </resources>

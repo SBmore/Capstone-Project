@@ -93,7 +93,7 @@
         android:orientation="vertical">
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/share_fab"
+            android:id="@+id/goto_doc_fab"
             android:layout_width="@dimen/fab_image_width"
             android:layout_height="@dimen/fab_image_width"
             android:layout_gravity="bottom|end"
@@ -102,7 +102,7 @@
             android:layout_marginStart="@dimen/fab_margin"
             android:contentDescription="@string/fab_description"
             android:elevation="@dimen/fab_elevation"
-            android:src="@drawable/plus" />
+            android:src="@drawable/launch" />
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/detailAdView"

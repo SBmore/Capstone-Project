@@ -2,6 +2,7 @@ package app.com.example.android.bulletpoints.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -106,7 +107,7 @@ public class DetailActivityFragment extends Fragment {
                 cursor.moveToFirst();
                 String img_url = cursor.getString(COL_ARTICLE_IMG_URL);
                 String title = cursor.getString(COL_ARTICLE_TITLE);
-                String articleLink = cursor.getString(COL_ARTICLE_LINK);
+                final String articleLink = cursor.getString(COL_ARTICLE_LINK);
                 String subtitle = new java.util.Date(cursor.getLong(COL_ARTICLE_PUB_DATE)).toString();
                 TextView titleTextView = (TextView) root.findViewById(R.id.detail_title);
                 TextView descriptionTextView = (TextView) root.findViewById(R.id.detail_subtitle);
@@ -118,12 +119,21 @@ public class DetailActivityFragment extends Fragment {
                 Glide.with(getContext()).load(img_url).centerCrop().into(view);
                 cursor.close();
 
-                // TODO: make sure that the share text is 140 characters or less to work with twitter
                 mArticleShareText = Utilities.formatShareText(title, articleLink, SHARE_HASHTAG);
                 // If onCreateOptionsMenu has already happened, we need to update the share intent now.
                 if (mShareActionProvider != null) {
                     mShareActionProvider.setShareIntent(createShareIntent());
                 }
+
+                root.findViewById(R.id.goto_doc_fab).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(articleLink));
+                        startActivity(intent);
+                    }
+                });
             }
         }
 
