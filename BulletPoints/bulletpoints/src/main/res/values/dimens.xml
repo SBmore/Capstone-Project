@@ -39,14 +39,13 @@
     <dimen name="logo_top">0dp</dimen>
 
     <!-- Bulletpoint margins / sizes -->
-    <dimen name="bulletpoint_margin">16dp</dimen>
+    <dimen name="bulletpoint_margin">24dp</dimen>
     <dimen name="bulletpoint_item_top">8dp</dimen>
     <dimen name="bulletpoint_item_bottom">8dp</dimen>
     <dimen name="bulletpoint_item_start">16dp</dimen>
     <dimen name="bulletpoint_item_end">16dp</dimen>
     <dimen name="bulletpoint_bullet_size">52sp</dimen>
     <dimen name="bulletpoint_text_size">12sp</dimen>
-    <dimen name="bulletpoint_block_stroke">1dp</dimen>
     <dimen name="bulletpoint_block_bottom">140dp</dimen>
 
     <dimen name="detail_photo_height">280dp</dimen>
