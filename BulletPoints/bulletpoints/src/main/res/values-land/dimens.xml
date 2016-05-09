@@ -9,6 +9,11 @@
     <dimen name="list_item_start_margin">12dp</dimen>
     <dimen name="list_item_end_margin">12dp</dimen>
 
+    <dimen name="bulletpoint_margin">112dp</dimen>
+    <dimen name="detail_bar_text_margin">112dp</dimen>
+    <dimen name="detail_photo_height">248dp</dimen>
+    <dimen name="bulletpoint_block_bottom">70dp</dimen>
+
     <dimen name="logo_top">4dp</dimen>
 
     <integer name="list_column_count">2</integer>
