@@ -117,7 +117,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         return new CursorLoader(getActivity(),
                 ArticleProvider.Articles.CONTENT_URI,
                 ARTICLE_COLUMNS,
-                null,
+                ArticleContract.ArticleColumns.BODY + " IS NOT NULL",
                 null,
                 sortOrder);
     }
