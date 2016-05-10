@@ -42,11 +42,13 @@ public class BulletPointWizard {
     public String[] getBulletPoints(String body) {
         int maxBullets = 5;
         int minStringLength = 50;
-        
+        int maxStringLength = 250;
+
         body = removeHtmlArtifacts(body);
         String[] words = body.replaceAll(CHAR_REPLACE_REGEX, "").toLowerCase().split(WORD_SPLIT_REGEX);
 
-        ArrayList<String> sentences = filterShortStrings(getSentences(body), minStringLength, maxBullets);
+        ArrayList<String> sentences = getSentences(body);
+        sentences = filterExtremeStrings(sentences, maxBullets, minStringLength, maxStringLength);
         String firstBulletpoint = sentences.get(0);
         String lastBulletpoint = sentences.get(sentences.size() - 1);
 
@@ -192,17 +194,21 @@ public class BulletPointWizard {
 
     /**
      * Loops through an ArrayList of strings and removes all strings that are shorter than the
-     * provided minLen, unless doing so would reduce the number of strings to less than minStr.
+     * provided minLen, and longer than the provided maxLen, unless doing so would reduce the
+     * number of strings to less than minStr.
      *
-     * @param strings    an ArrayList of strings that need to be filtered
-     * @param minLen     the minimum length a string should be to not be removed
-     * @param minStr     the minimum amount of strings that should be left in the array
-     * @return
+     * @param strings an ArrayList of strings that need to be filtered
+     * @param minStr  the minimum amount of strings that should be left in the array
+     * @param minLen  the minimum length a string should be to not be removed
+     * @param maxLen  the maximum length a string should be before being removed
+     * @return        the filtered ArrayList of strings
      */
-    private ArrayList<String> filterShortStrings(ArrayList<String> strings, int minLen, int minStr) {
+    private ArrayList<String> filterExtremeStrings(ArrayList<String> strings, int minStr,
+                                                   int minLen, int maxLen) {
         if (strings.size() > minStr) {
             for (int i = 0; i < strings.size(); i += 1) {
-                if (strings.get(i).length() < minLen && strings.size() - 1 > minStr) {
+                int stringLen = strings.get(i).length();
+                if ((stringLen < minLen ||stringLen > maxLen) && strings.size() - 1 > minStr) {
                     strings.remove(i);
                 }
             }
