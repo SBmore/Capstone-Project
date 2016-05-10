@@ -66,4 +66,6 @@
     <!-- text sizes -->
     <dimen name="list_title_text_size">14sp</dimen>
     <dimen name="list_subtitle_text_size">12sp</dimen>
+    <dimen name="detail_title_text_size">14sp</dimen>
+    <dimen name="detail_subtitle_text_size">10sp</dimen>
 </resources>

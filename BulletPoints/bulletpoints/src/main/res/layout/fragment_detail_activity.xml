@@ -38,6 +38,7 @@
                     android:paddingRight="@dimen/detail_bar_text_margin"
                     android:paddingStart="@dimen/detail_bar_text_margin"
                     android:paddingTop="@dimen/detail_bar_title_top"
+                    android:textSize="@dimen/detail_title_text_size"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -49,6 +50,7 @@
                     android:paddingLeft="@dimen/detail_bar_text_margin"
                     android:paddingRight="@dimen/detail_bar_text_margin"
                     android:paddingStart="@dimen/detail_bar_text_margin"
+                    android:textSize="@dimen/detail_subtitle_text_size"
                     android:textColor="@color/white" />
             </LinearLayout>
 

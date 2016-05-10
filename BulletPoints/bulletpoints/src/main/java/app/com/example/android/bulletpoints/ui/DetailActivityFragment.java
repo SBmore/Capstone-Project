@@ -2,6 +2,7 @@ package app.com.example.android.bulletpoints.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -88,6 +89,7 @@ public class DetailActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_detail_activity, container, false);
+        Typeface robotoReg = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Regular.ttf");
 
         long id = -1;
         Bundle arguments = getArguments();
@@ -111,7 +113,9 @@ public class DetailActivityFragment extends Fragment {
                 final String articleLink = cursor.getString(COL_ARTICLE_LINK);
                 String subtitle = new java.util.Date(cursor.getLong(COL_ARTICLE_PUB_DATE)).toString();
                 TextView titleTextView = (TextView) root.findViewById(R.id.detail_title);
+                titleTextView.setTypeface(robotoReg);
                 TextView descriptionTextView = (TextView) root.findViewById(R.id.detail_subtitle);
+                descriptionTextView.setTypeface(robotoReg);
                 ImageView view = (ImageView) root.findViewById(R.id.article_photo);
 
                 setBulletpoints(root, cursor);
