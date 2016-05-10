@@ -74,13 +74,13 @@ public class BulletPointWizard {
                 }
             } else if (num >= beginningNum + endNum) {
                 // the end (pick 1)
-                if (isNewChoice(bulletPoints[2], sentenceScores, sentence)) {
-                    bulletPoints[2] = sentence;
+                if (isNewChoice(bulletPoints[3], sentenceScores, sentence)) {
+                    bulletPoints[3] = sentence;
                 }
             } else {
                 // the middle (pick 1)
-                if (isNewChoice(bulletPoints[3], sentenceScores, sentence)) {
-                    bulletPoints[3] = sentence;
+                if (isNewChoice(bulletPoints[2], sentenceScores, sentence)) {
+                    bulletPoints[2] = sentence;
                 }
             }
             num += 1;
