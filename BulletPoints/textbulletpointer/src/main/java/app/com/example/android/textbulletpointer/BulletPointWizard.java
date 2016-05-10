@@ -3,6 +3,7 @@ package app.com.example.android.textbulletpointer;
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -132,7 +133,7 @@ public class BulletPointWizard {
      */
     private Map<String, Integer> scoreSentences(ArrayList<String> sentences,
                                                 Map<String, Integer> wordScores) {
-        Map<String, Integer> map = new HashMap<>();
+        Map<String, Integer> map = new LinkedHashMap<>();
 
         for (String sentence : sentences) {
             String[] words = sentence.replaceAll(CHAR_REPLACE_REGEX, "").toLowerCase().split(WORD_SPLIT_REGEX);
