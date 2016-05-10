@@ -56,8 +56,6 @@ public class BulletPointWizard {
         sentences.remove(0);
         sentences.remove(sentences.size() - 1);
 
-        String[] bulletPoints = {firstBulletpoint, "", "", "", lastBulletpoint};
-
         // get unique words and score them based on occurrences in text body
         Map<String, Integer> wordScores = countOccurrences(words);
         Map<String, Integer> sentenceScores = scoreSentences(sentences, wordScores);
@@ -66,14 +64,23 @@ public class BulletPointWizard {
         int beginningNum = (int) Math.ceil(oneThird);
         int endNum = (int) Math.ceil(oneThird);
 
+        ArrayList<String> snapshot = new ArrayList<String>(sentenceScores.keySet());
+
+        // Give all the bulletpoints a default value to avoid blanks
+        String[] bulletPoints = {firstBulletpoint,
+                snapshot.get(0),
+                snapshot.get(sentences.size() / 2),
+                snapshot.get(snapshot.size() - 1),
+                lastBulletpoint};
+
         int num = 0;
         for (String sentence : sentenceScores.keySet()) {
-            if (num <= beginningNum) {
+            if (num < beginningNum) {
                 // the beginning (pick 1)
                 if (isNewChoice(bulletPoints[1], sentenceScores, sentence)) {
                     bulletPoints[1] = sentence;
                 }
-            } else if (num >= beginningNum + endNum) {
+            } else if (num > beginningNum + endNum) {
                 // the end (pick 1)
                 if (isNewChoice(bulletPoints[3], sentenceScores, sentence)) {
                     bulletPoints[3] = sentence;
