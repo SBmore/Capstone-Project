@@ -111,7 +111,7 @@ public class DetailActivityFragment extends Fragment {
                 String img_url = cursor.getString(COL_ARTICLE_IMG_URL);
                 String title = cursor.getString(COL_ARTICLE_TITLE);
                 final String articleLink = cursor.getString(COL_ARTICLE_LINK);
-                String subtitle = new java.util.Date(cursor.getLong(COL_ARTICLE_PUB_DATE)).toString();
+                String subtitle = Utilities.formatDate(cursor.getLong(COL_ARTICLE_PUB_DATE));
                 TextView titleTextView = (TextView) root.findViewById(R.id.detail_title);
                 titleTextView.setTypeface(robotoReg);
                 TextView descriptionTextView = (TextView) root.findViewById(R.id.detail_subtitle);

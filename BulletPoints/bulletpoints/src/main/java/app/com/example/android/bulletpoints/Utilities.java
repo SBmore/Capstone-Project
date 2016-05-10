@@ -8,6 +8,9 @@ import com.google.api.services.urlshortener.Urlshortener;
 import com.google.api.services.urlshortener.model.Url;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Utility class that contains useful parsing and formatting methods
@@ -55,5 +58,17 @@ public class Utilities {
 
         shareText = text + " " + shareText;
         return shareText;
+    }
+
+    /**
+     * Take in a unix timestamp and return it as a formatted string.
+     * @param unixTimestamp the timestamp to convert to a formatted string
+     * @return              the formatted string
+     */
+    public static String formatDate(long unixTimestamp) {
+        Date date = new Date(unixTimestamp);
+        String format = "dd-MMMM-yyyy";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.UK);
+        return dateFormat.format(date);
     }
 }
