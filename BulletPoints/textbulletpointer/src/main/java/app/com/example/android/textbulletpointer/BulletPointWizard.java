@@ -173,7 +173,7 @@ public class BulletPointWizard {
         for (int end = iterator.next();
              end != BreakIterator.DONE;
              start = end, end = iterator.next()) {
-            sentences.add(text.substring(start, end));
+            sentences.add(text.substring(start, end).trim());
         }
         return sentences;
     }
