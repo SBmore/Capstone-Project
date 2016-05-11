@@ -38,8 +38,8 @@
                     android:paddingRight="@dimen/detail_bar_text_margin"
                     android:paddingStart="@dimen/detail_bar_text_margin"
                     android:paddingTop="@dimen/detail_bar_title_top"
-                    android:textSize="@dimen/detail_title_text_size"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/detail_title_text_size" />
 
                 <TextView
                     android:id="@+id/detail_subtitle"
@@ -50,8 +50,8 @@
                     android:paddingLeft="@dimen/detail_bar_text_margin"
                     android:paddingRight="@dimen/detail_bar_text_margin"
                     android:paddingStart="@dimen/detail_bar_text_margin"
-                    android:textSize="@dimen/detail_subtitle_text_size"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/detail_subtitle_text_size" />
             </LinearLayout>
 
             <FrameLayout
@@ -63,24 +63,38 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/bulletpoint_block_bottom"
                     android:layout_marginEnd="@dimen/bulletpoint_margin"
                     android:layout_marginLeft="@dimen/bulletpoint_margin"
                     android:layout_marginRight="@dimen/bulletpoint_margin"
                     android:layout_marginStart="@dimen/bulletpoint_margin"
-                    android:layout_marginBottom="@dimen/bulletpoint_block_bottom"
-                    android:elevation="@dimen/bulletpoint_elevation"
                     android:background="@color/white"
+                    android:elevation="@dimen/bulletpoint_elevation"
                     android:orientation="vertical">
 
-                    <include layout="@layout/bulletpoint_item" android:id="@+id/bulletpoint_1" />
+                    <include
+                        android:id="@+id/bulletpoint_1"
+                        layout="@layout/bulletpoint_item" />
+                    <include layout="@layout/divider" />
 
-                    <include layout="@layout/bulletpoint_item" android:id="@+id/bulletpoint_2" />
+                    <include
+                        android:id="@+id/bulletpoint_2"
+                        layout="@layout/bulletpoint_item" />
+                    <include layout="@layout/divider" />
 
-                    <include layout="@layout/bulletpoint_item" android:id="@+id/bulletpoint_3" />
+                    <include
+                        android:id="@+id/bulletpoint_3"
+                        layout="@layout/bulletpoint_item" />
+                    <include layout="@layout/divider" />
 
-                    <include layout="@layout/bulletpoint_item" android:id="@+id/bulletpoint_4" />
+                    <include
+                        android:id="@+id/bulletpoint_4"
+                        layout="@layout/bulletpoint_item" />
+                    <include layout="@layout/divider" />
 
-                    <include layout="@layout/bulletpoint_item" android:id="@+id/bulletpoint_5" />
+                    <include
+                        android:id="@+id/bulletpoint_5"
+                        layout="@layout/bulletpoint_item" />
 
                 </LinearLayout>
             </FrameLayout>
