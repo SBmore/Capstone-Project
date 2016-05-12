@@ -32,6 +32,11 @@ public class BulletPointWizard {
     // http://stackoverflow.com/questions/18830813/how-can-i-remove-punctuation-from-input-text-in-java
     private static final String CHAR_REPLACE_REGEX = "[^a-zA-Z ]";
     private static final String WORD_SPLIT_REGEX = "\\s+";
+    // the minimum and maximum length a string should be before being removed
+    private static final int MIN_LEN = 50;
+    private static final int MAX_LEN = 250;
+
+    private static final int BULLETS_NUM = 5;
 
     /**
      * Main method that splits out the body into it's components and strips out the most useful
@@ -41,15 +46,12 @@ public class BulletPointWizard {
      * @return the      bulletpoints as an array
      */
     public String[] getBulletPoints(String body) {
-        int maxBullets = 5;
-        int minStringLength = 50;
-        int maxStringLength = 250;
 
         body = removeHtmlArtifacts(body);
         String[] words = body.replaceAll(CHAR_REPLACE_REGEX, "").toLowerCase().split(WORD_SPLIT_REGEX);
 
         ArrayList<String> sentences = getSentences(body);
-        sentences = filterExtremeStrings(sentences, maxBullets, minStringLength, maxStringLength);
+        sentences = filterExtremeStrings(sentences);
         String firstBulletpoint = sentences.get(0);
         String lastBulletpoint = sentences.get(sentences.size() - 1);
 
@@ -203,27 +205,37 @@ public class BulletPointWizard {
     }
 
     /**
-     * Loops through an ArrayList of strings and removes all strings that are shorter than the
-     * provided minLen, and longer than the provided maxLen, unless doing so would reduce the
-     * number of strings to less than minStr.
+     * Loops through an ArrayList of strings and removes them if they meet the filter criteria
+     * in the isFiltered method.
      *
      * @param strings an ArrayList of strings that need to be filtered
-     * @param minStr  the minimum amount of strings that should be left in the array
-     * @param minLen  the minimum length a string should be to not be removed
-     * @param maxLen  the maximum length a string should be before being removed
      * @return        the filtered ArrayList of strings
      */
-    private ArrayList<String> filterExtremeStrings(ArrayList<String> strings, int minStr,
-                                                   int minLen, int maxLen) {
-        if (strings.size() > minStr) {
+    private ArrayList<String> filterExtremeStrings(ArrayList<String> strings) {
+        if (strings.size() > BULLETS_NUM) {
             for (int i = 0; i < strings.size(); i += 1) {
-                int stringLen = strings.get(i).length();
-                if ((stringLen < minLen ||stringLen > maxLen) && strings.size() - 1 > minStr) {
+                if (isFiltered(strings.get(i), strings.size() - 1)) {
                     strings.remove(i);
+                    i--;
                 }
             }
         }
 
         return strings;
+    }
+
+
+    /**
+     * Sets whether the provided string should be removed or not besed on whether it is shorter
+     * than MIN_LEN, longer than the MAX_LEN, or contains 'href=', unless doing so would reduce
+     * the number of strings to less than BULLETS_NUM.
+     * @param sentence      the sentence to test for filtering
+     * @param numOfStrings  the amount of strings to no
+     * @return
+     */
+    private boolean isFiltered(String sentence, int numOfStrings) {
+        int stringLen = sentence.length();
+        return ((stringLen < MIN_LEN || stringLen > MAX_LEN || sentence.contains("href=")) &&
+                numOfStrings > BULLETS_NUM);
     }
 }
