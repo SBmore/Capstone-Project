@@ -1,6 +1,9 @@
 package app.com.example.android.bulletpoints;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.gson.GsonFactory;
@@ -70,5 +73,25 @@ public class Utilities {
         String format = "dd-MMMM-yyyy";
         SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.UK);
         return dateFormat.format(date);
+    }
+
+    /**
+     * Source:          http://stackoverflow.com/questions/4238921/detect-whether-there-is-an-internet-connection-available-on-android
+     * User:            Alexandre Jasmin
+     * Changes:         .getApplicationContext() to access getSystemService
+     * @param context   activity context
+     * @return
+     */
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public static void toastNoNetword(Context context) {
+        String text = context.getString(R.string.err_no_network);
+        Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+        toast.show();
     }
 }

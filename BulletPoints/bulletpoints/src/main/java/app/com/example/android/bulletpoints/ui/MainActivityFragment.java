@@ -19,6 +19,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import app.com.example.android.bulletpoints.R;
+import app.com.example.android.bulletpoints.Utilities;
 import app.com.example.android.bulletpoints.data.ArticleAdaptor;
 import app.com.example.android.bulletpoints.data.ArticleContract;
 import app.com.example.android.bulletpoints.data.ArticleDataFetcher;
@@ -106,8 +107,13 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     private void refresh() {
         mSwipeRefreshLayout.setRefreshing(true);
-        fetchData();
-        mArticleAdaptor.notifyDataSetChanged();
+        if (Utilities.isNetworkAvailable(getContext())) {
+            fetchData();
+            mArticleAdaptor.notifyDataSetChanged();
+        } else {
+            mSwipeRefreshLayout.setRefreshing(false);
+            Utilities.toastNoNetword(getContext());
+        }
     }
 
     @Override
