@@ -188,13 +188,13 @@ public class BulletPointWizard {
      */
     private String removeHtmlArtifacts(String body) {
         String[] UNBREAKABLE = {"\u00A0", ""};
+        String[] IMAGE = {"[object Object]", ""};
         String[] NEWLINE1 = {".,", ".\n"};
         String[] QUOTE_END = {".\",", ".\"\n"};
         String[] AMPERSAND = {"&amp;", "&"};
         String[] QUOTE = {"&quot;", "\""};
         String[] APOSTROPHE = {"&#39;", "'"};
-        String[] IMAGE = {"[object Object],", ""};
-        String[][] artifacts = {UNBREAKABLE, QUOTE_END, NEWLINE1, AMPERSAND, QUOTE, APOSTROPHE, IMAGE};
+        String[][] artifacts = {UNBREAKABLE, IMAGE, NEWLINE1, QUOTE_END, QUOTE, AMPERSAND, APOSTROPHE};
 
         for (int i = 0; i < artifacts.length; i += 1) {
             if (body.contains(artifacts[i][0])) {
