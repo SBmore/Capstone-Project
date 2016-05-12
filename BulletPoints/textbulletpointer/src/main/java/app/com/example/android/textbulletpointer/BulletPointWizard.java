@@ -194,7 +194,7 @@ public class BulletPointWizard {
         String[] AMPERSAND = {"&amp;", "&"};
         String[] QUOTE = {"&quot;", "\""};
         String[] APOSTROPHE = {"&#39;", "'"};
-        String[][] artifacts = {UNBREAKABLE, IMAGE, NEWLINE1, QUOTE_END, QUOTE, AMPERSAND, APOSTROPHE};
+        String[][] artifacts = {UNBREAKABLE, QUOTE, QUOTE_END, IMAGE, NEWLINE1, AMPERSAND, APOSTROPHE};
 
         for (int i = 0; i < artifacts.length; i += 1) {
             if (body.contains(artifacts[i][0])) {
