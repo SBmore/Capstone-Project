@@ -149,16 +149,16 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
                                 Log.v(TAG, "Updated img: " + imgUrl);
 
                                 BulletPointWizard bulletPointWizard = new BulletPointWizard();
-                                String[] bulletPoints = bulletPointWizard.getBulletPoints(articleBody);
+                                String[][] bulletPoints = bulletPointWizard.getBulletPoints(articleBody);
 
                                 ContentValues values = new ContentValues();
                                 values.put(ArticleContract.ArticleColumns.IMG_URL, imgUrl);
                                 values.put(ArticleContract.ArticleColumns.BODY, articleBody);
-                                values.put(ArticleContract.ArticleColumns.BULLETPOINT_1, bulletPoints[0]);
-                                values.put(ArticleContract.ArticleColumns.BULLETPOINT_2, bulletPoints[1]);
-                                values.put(ArticleContract.ArticleColumns.BULLETPOINT_3, bulletPoints[2]);
-                                values.put(ArticleContract.ArticleColumns.BULLETPOINT_4, bulletPoints[3]);
-                                values.put(ArticleContract.ArticleColumns.BULLETPOINT_5, bulletPoints[4]);
+                                values.put(ArticleContract.ArticleColumns.BULLETPOINT_1, bulletPoints[0][0]);
+                                values.put(ArticleContract.ArticleColumns.BULLETPOINT_2, bulletPoints[1][0]);
+                                values.put(ArticleContract.ArticleColumns.BULLETPOINT_3, bulletPoints[2][0]);
+                                values.put(ArticleContract.ArticleColumns.BULLETPOINT_4, bulletPoints[3][0]);
+                                values.put(ArticleContract.ArticleColumns.BULLETPOINT_5, bulletPoints[4][0]);
 
                                 int num = mContext.getContentResolver().update(
                                         ArticleProvider.Articles.CONTENT_URI,
@@ -182,7 +182,7 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
 
         } catch (Exception e) {
             this.exception = e;
-            return null;
+            return false;
         }
     }
 
