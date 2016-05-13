@@ -42,18 +42,24 @@ public class BulletPointWizard {
      * Main method that splits out the body into it's components and strips out the most useful
      * sentences to summarise the text.
      *
-     * @param body      the text to summarise into bulletpoints
+     * @param body the text to summarise into bulletpoints
      * @return the      bulletpoints as an array
      */
-    public String[] getBulletPoints(String body) {
+    public String[][] getBulletPoints(String body) {
 
         body = removeHtmlArtifacts(body);
         String[] words = body.replaceAll(CHAR_REPLACE_REGEX, "").toLowerCase().split(WORD_SPLIT_REGEX);
 
+        String[][] bulletpoints = new String[5][2];
+
         ArrayList<String> sentences = getSentences(body);
         sentences = filterExtremeStrings(sentences);
-        String firstBulletpoint = sentences.get(0);
-        String lastBulletpoint = sentences.get(sentences.size() - 1);
+        // set first bulletpoint and its paragraph
+        bulletpoints[0][0] = sentences.get(0);
+        bulletpoints[0][1] = getParagraph(sentences, 0);
+
+        bulletpoints[4][0] = sentences.get(sentences.size() - 1);
+        bulletpoints[4][1] = getParagraph(sentences, sentences.size() - 1);
 
         sentences.remove(0);
         sentences.remove(sentences.size() - 1);
@@ -69,44 +75,45 @@ public class BulletPointWizard {
         ArrayList<String> snapshot = new ArrayList<String>(sentenceScores.keySet());
 
         // Give all the bulletpoints a default value to avoid blanks
-        String[] bulletPoints = {firstBulletpoint,
-                snapshot.get(0),
-                snapshot.get(sentences.size() / 2),
-                snapshot.get(snapshot.size() - 1),
-                lastBulletpoint};
+        bulletpoints[1][0] = snapshot.get(0);
+        bulletpoints[1][1] = getParagraph(snapshot, 0);
+        bulletpoints[2][0] = snapshot.get(sentences.size() / 2);
+        bulletpoints[2][1] = getParagraph(snapshot, sentences.size() / 2);
+        bulletpoints[3][0] = snapshot.get(snapshot.size() - 1);
+        bulletpoints[3][1] = getParagraph(snapshot, snapshot.size() - 1);
 
         int num = 0;
         for (String sentence : sentenceScores.keySet()) {
             if (num < beginningNum) {
                 // the beginning (pick 1)
-                if (isNewChoice(bulletPoints[1], sentenceScores, sentence)) {
-                    bulletPoints[1] = sentence;
+                if (isNewChoice(bulletpoints[1][0], sentenceScores, sentence)) {
+                    bulletpoints[1][0] = sentence;
                 }
             } else if (num > beginningNum + endNum) {
                 // the end (pick 1)
-                if (isNewChoice(bulletPoints[3], sentenceScores, sentence)) {
-                    bulletPoints[3] = sentence;
+                if (isNewChoice(bulletpoints[3][0], sentenceScores, sentence)) {
+                    bulletpoints[3][0] = sentence;
                 }
             } else {
                 // the middle (pick 1)
-                if (isNewChoice(bulletPoints[2], sentenceScores, sentence)) {
-                    bulletPoints[2] = sentence;
+                if (isNewChoice(bulletpoints[2][0], sentenceScores, sentence)) {
+                    bulletpoints[2][0] = sentence;
                 }
             }
             num += 1;
         }
 
-        return bulletPoints;
+        return bulletpoints;
     }
 
     /**
      * Checks if the new sentence is a better candidate than the old sentence.
      *
-     * @param sentence  the current best scoring sentence
-     * @param scores    a map of all the scores
-     * @param text      the contending sentence to check against
-     * @return          <code>true</code> if the new sentence is a better candidate than the
-     *                  current by having a lower score. <code>false</code> otherwise.
+     * @param sentence the current best scoring sentence
+     * @param scores   a map of all the scores
+     * @param text     the contending sentence to check against
+     * @return <code>true</code> if the new sentence is a better candidate than the
+     * current by having a lower score. <code>false</code> otherwise.
      */
     private boolean isNewChoice(String sentence, Map<String, Integer> scores, String text) {
         return sentence.equals("") || scores.get(text) < scores.get(sentence);
@@ -116,8 +123,8 @@ public class BulletPointWizard {
     /**
      * Takes in an array of words and maps them with the amount of times they appear in the array.
      *
-     * @param elements  all the words to work out the occurrences for
-     * @return          map of all the unique elements and their score.
+     * @param elements all the words to work out the occurrences for
+     * @return map of all the unique elements and their score.
      */
     private Map<String, Integer> countOccurrences(String[] elements) {
         Map<String, Integer> map = new HashMap<>();
@@ -136,9 +143,9 @@ public class BulletPointWizard {
     /**
      * Uses the score of each word to give a score to each sentence
      *
-     * @param sentences     an ArrayList of sentence
-     * @param wordScores    a score of every word in the text
-     * @return              map of all the sentences and their score.
+     * @param sentences  an ArrayList of sentence
+     * @param wordScores a score of every word in the text
+     * @return map of all the sentences and their score.
      */
     private Map<String, Integer> scoreSentences(ArrayList<String> sentences,
                                                 Map<String, Integer> wordScores) {
@@ -163,8 +170,8 @@ public class BulletPointWizard {
     /**
      * Splits a body of text into an ArrayList of the sentences that make it up.
      *
-     * @param text     the body of text to split up
-     * @return         an ArrayList of sentences
+     * @param text the body of text to split up
+     * @return an ArrayList of sentences
      */
     private ArrayList<String> getSentences(String text) {
         ArrayList<String> sentences = new ArrayList<>();
@@ -183,16 +190,16 @@ public class BulletPointWizard {
     /**
      * Removes HTML escape characters so that it can be parsed properly.
      *
-     * @param body     the body of text to clean
-     * @return         the cleaned body
+     * @param body the body of text to clean
+     * @return the cleaned body
      */
     private String removeHtmlArtifacts(String body) {
         String[] UNBREAKABLE = {"\u00A0", ""};
         String[] IMAGE = {"[object Object]", ""};
         String[] NEWLINE1 = {".,", ".\n"};
+        String[] QUOTE = {"&quot;", "\""};
         String[] QUOTE_END = {".\",", ".\"\n"};
         String[] AMPERSAND = {"&amp;", "&"};
-        String[] QUOTE = {"&quot;", "\""};
         String[] APOSTROPHE = {"&#39;", "'"};
         String[][] artifacts = {UNBREAKABLE, QUOTE, QUOTE_END, IMAGE, NEWLINE1, AMPERSAND, APOSTROPHE};
 
@@ -209,7 +216,7 @@ public class BulletPointWizard {
      * in the isFiltered method.
      *
      * @param strings an ArrayList of strings that need to be filtered
-     * @return        the filtered ArrayList of strings
+     * @return the filtered ArrayList of strings
      */
     private ArrayList<String> filterExtremeStrings(ArrayList<String> strings) {
         if (strings.size() > BULLETS_NUM) {
@@ -224,18 +231,39 @@ public class BulletPointWizard {
         return strings;
     }
 
-
     /**
      * Sets whether the provided string should be removed or not besed on whether it is shorter
      * than MIN_LEN, longer than the MAX_LEN, or contains 'href=', unless doing so would reduce
      * the number of strings to less than BULLETS_NUM.
-     * @param sentence      the sentence to test for filtering
-     * @param numOfStrings  the amount of strings to no
+     *
+     * @param sentence     the sentence to test for filtering
+     * @param numOfStrings the amount of strings to no
      * @return
      */
     private boolean isFiltered(String sentence, int numOfStrings) {
         int stringLen = sentence.length();
         return ((stringLen < MIN_LEN || stringLen > MAX_LEN || sentence.contains("href=")) &&
                 numOfStrings > BULLETS_NUM);
+    }
+
+    private String getParagraph(ArrayList<String> sentences, int index) {
+        int num = 3;
+        String paragraph = "";
+
+        if (index > 0 && index < sentences.size() - 1) {
+            // middle of list, get sentence before and after
+            index -= 1;
+        } else if (index == sentences.size() - 1) {
+            // end of list, get two sentences before
+            index -= 2;
+        }
+
+        for (int i = 0; i < num; i += 1) {
+            if (index + i < sentences.size()) {
+                paragraph += sentences.get(index + i) + "\n";
+            }
+        }
+
+        return paragraph.trim();
     }
 }
