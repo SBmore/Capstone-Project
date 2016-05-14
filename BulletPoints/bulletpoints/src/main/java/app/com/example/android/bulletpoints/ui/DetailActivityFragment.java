@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
@@ -21,13 +22,11 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import app.com.example.android.bulletpoints.R;
 import app.com.example.android.bulletpoints.Utilities;
 import app.com.example.android.bulletpoints.data.ArticleContract;
 import app.com.example.android.bulletpoints.data.ArticleProvider;
+import app.com.example.android.bulletpoints.data.BulletPointDisplayData;
 
 public class DetailActivityFragment extends Fragment {
     public final static String EXTRA_ID = "extra_id";
@@ -67,6 +66,7 @@ public class DetailActivityFragment extends Fragment {
     public static final int COL_BULLETPOINT_3 = 8;
     public static final int COL_BULLETPOINT_4 = 9;
     public static final int COL_BULLETPOINT_5 = 10;
+    public static final int COL_PARAGRAPH_1 = 11;
 
     public DetailActivityFragment() {
     }
@@ -157,25 +157,36 @@ public class DetailActivityFragment extends Fragment {
     }
 
     private void setBulletpoints(View root, Cursor cursor) {
-        Map<String, View> bulletpointMap = bulletpointMapper(cursor, root);
+        BulletPointDisplayData[] bulletpoints = bulletpointMapper(cursor, root);
 
-        for (Map.Entry<String, View> entry : bulletpointMap.entrySet()) {
-            TextView bpText = (TextView) entry.getValue().findViewById(R.id.bulletpoint_text);
-            bpText.setText(entry.getKey());
+        for (int i = 0; i < bulletpoints.length; i += 1) {
+            final BulletPointDisplayData bulletpoint = bulletpoints[i];
+            TextView bpText = (TextView) bulletpoint.getTextView().findViewById(R.id.bulletpoint_text);
+            bpText.setText(bulletpoint.getBulletpoint());
+
+            bpText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showParagraph(bulletpoint.getParagraph());
+                }
+            });
         }
     }
 
-    private Map<String, View> bulletpointMapper(Cursor cursor, View root) {
+    private BulletPointDisplayData[] bulletpointMapper(Cursor cursor, View root) {
         String bulletIdBase = "bulletpoint_";
-        Map<String, View> map = new HashMap<>(MAX_BULLETPOINTS);
+        BulletPointDisplayData[] bulletpoints = new BulletPointDisplayData[MAX_BULLETPOINTS];
 
-        for (int i = 1; i <= MAX_BULLETPOINTS; i += 1) {
-            String bulletId = bulletIdBase + i;
+        for (int i = 0; i <= MAX_BULLETPOINTS - 1; i += 1) {
+            String bulletId = bulletIdBase + (i + 1);
             int resourceId = getResources().getIdentifier(bulletId, "id", getContext().getPackageName());
-            map.put(cursor.getString(i + COL_BULLETPOINT_1 - 1), root.findViewById(resourceId));
+            String bpoint = cursor.getString(i + COL_BULLETPOINT_1);
+            String pgraph = cursor.getString(i + COL_PARAGRAPH_1);
+            View view = root.findViewById(resourceId);
+            bulletpoints[i] = new BulletPointDisplayData(bpoint, pgraph, view);
         }
 
-        return map;
+        return bulletpoints;
     }
 
     private Intent createShareIntent() {
@@ -183,5 +194,11 @@ public class DetailActivityFragment extends Fragment {
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_TEXT, mArticleShareText);
         return shareIntent;
+    }
+
+    private void showParagraph(String text) {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        DetailParagraphFragment paragraph = DetailParagraphFragment.newInstance(text);
+        paragraph.show(fragmentManager, "paragraph");
     }
 }

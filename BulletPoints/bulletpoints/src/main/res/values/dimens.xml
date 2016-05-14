@@ -49,6 +49,9 @@
     <dimen name="bulletpoint_block_bottom">140dp</dimen>
     <dimen name="bulletpoint_divider">1dp</dimen>
 
+    <!-- Paragraph -->
+    <dimen name="paragraph_padding">16dp</dimen>
+
     <dimen name="detail_photo_height">280dp</dimen>
 
     <!-- Elevation -->
