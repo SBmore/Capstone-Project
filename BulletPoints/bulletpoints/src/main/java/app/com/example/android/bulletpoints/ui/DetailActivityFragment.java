@@ -25,8 +25,8 @@ import com.google.android.gms.ads.AdView;
 import app.com.example.android.bulletpoints.R;
 import app.com.example.android.bulletpoints.Utilities;
 import app.com.example.android.bulletpoints.data.ArticleContract;
-import app.com.example.android.bulletpoints.data.ArticleProvider;
 import app.com.example.android.bulletpoints.data.BulletPointDisplayData;
+import app.com.example.android.bulletpoints.data.QueryHelper;
 
 public class DetailActivityFragment extends Fragment {
     public final static String EXTRA_ID = "extra_id";
@@ -34,7 +34,6 @@ public class DetailActivityFragment extends Fragment {
     public static final int MAX_BULLETPOINTS = 5;
     private ShareActionProvider mShareActionProvider;
     private String mArticleShareText;
-
     private static final String[] ARTICLE_COLUMNS = {
             ArticleContract.ArticleColumns._ID,
             ArticleContract.ArticleColumns.TITLE,
@@ -103,12 +102,7 @@ public class DetailActivityFragment extends Fragment {
 
         // TODO: temporary to test loading a picture
         if (id > -1) {
-            Cursor cursor = getContext().getContentResolver().query(
-                    ArticleProvider.Articles.CONTENT_URI,
-                    ARTICLE_COLUMNS,
-                    ArticleContract.ArticleColumns._ID + "= ?",
-                    new String[]{Long.toString(id)},
-                    null);
+            Cursor cursor = QueryHelper.getById(getContext(), ARTICLE_COLUMNS, Long.toString(id));
 
             if (cursor != null) {
                 cursor.moveToFirst();

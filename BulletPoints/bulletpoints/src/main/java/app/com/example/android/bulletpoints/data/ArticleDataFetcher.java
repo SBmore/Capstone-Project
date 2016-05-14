@@ -75,12 +75,8 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
                     link = new URL(((RSSItem) list.get(x)).getLink().toString());
                     thumbnail = ((RSSItem) list.get(x)).getThumbnails().get(0).toString();
 
-                    Cursor cursor = mContext.getContentResolver().query(
-                            ArticleProvider.Articles.CONTENT_URI,
-                            new String[]{ArticleContract.ArticleColumns._ID},
-                            ArticleContract.ArticleColumns.TITLE + "= ?",
-                            new String[]{title},
-                            null);
+                    String[] columns = new String[]{ArticleContract.ArticleColumns._ID};
+                    Cursor cursor = QueryHelper.getByTitle(mContext, columns, title);
 
                     boolean exists = false;
 
@@ -97,21 +93,13 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
                     contentValues.put(ArticleContract.ArticleColumns.IMG_URL, thumbnail);
 
                     if (exists) {
-                        int num = mContext.getContentResolver().update(
-                                ArticleProvider.Articles.CONTENT_URI,
-                                contentValues,
-                                ArticleContract.ArticleColumns.TITLE + "= ?",
-                                new String[]{title}
-                        );
+                        int num = QueryHelper.updateByTitle(mContext, contentValues, title);
                         Log.v(TAG, "Updated main: " + num);
                     } else {
                         contentValues.put(ArticleContract.ArticleColumns.TITLE, title);
                         contentValues.put(ArticleContract.ArticleColumns.LINK,
                                 Utilities.shortenUrl(mContext, link.toString()));
-                        mContext.getContentResolver().insert(
-                                ArticleProvider.Articles.CONTENT_URI,
-                                contentValues
-                        );
+                        QueryHelper.insert(mContext, contentValues);
                     }
 
                     // get the link to the full article
@@ -171,12 +159,7 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
                                     values.put(columns[i][1], bulletPoints[i][1]);
                                 }
 
-                                int num = mContext.getContentResolver().update(
-                                        ArticleProvider.Articles.CONTENT_URI,
-                                        values,
-                                        ArticleContract.ArticleColumns.TITLE + "= ?",
-                                        new String[]{title}
-                                );
+                                int num = QueryHelper.updateByTitle(mContext, values, title);
 
                                 Log.v(TAG, "Updated with body: " + num);
 
