@@ -48,7 +48,11 @@ public class DetailActivityFragment extends Fragment {
             ArticleContract.ArticleColumns.BULLETPOINT_3,
             ArticleContract.ArticleColumns.BULLETPOINT_4,
             ArticleContract.ArticleColumns.BULLETPOINT_5,
-
+            ArticleContract.ArticleColumns.PARAGRAPH_1,
+            ArticleContract.ArticleColumns.PARAGRAPH_2,
+            ArticleContract.ArticleColumns.PARAGRAPH_3,
+            ArticleContract.ArticleColumns.PARAGRAPH_4,
+            ArticleContract.ArticleColumns.PARAGRAPH_5,
     };
 
     // These are the indices for the columns in ArticleContract

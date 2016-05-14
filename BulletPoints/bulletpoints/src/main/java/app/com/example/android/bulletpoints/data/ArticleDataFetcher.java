@@ -131,6 +131,18 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
                             if (response.isSuccessful()) {
+                                String[][] columns = {
+                                        {ArticleContract.ArticleColumns.BULLETPOINT_1,
+                                                ArticleContract.ArticleColumns.PARAGRAPH_1},
+                                        {ArticleContract.ArticleColumns.BULLETPOINT_2,
+                                                ArticleContract.ArticleColumns.PARAGRAPH_2},
+                                        {ArticleContract.ArticleColumns.BULLETPOINT_3,
+                                                ArticleContract.ArticleColumns.PARAGRAPH_3},
+                                        {ArticleContract.ArticleColumns.BULLETPOINT_4,
+                                                ArticleContract.ArticleColumns.PARAGRAPH_4},
+                                        {ArticleContract.ArticleColumns.BULLETPOINT_5,
+                                                ArticleContract.ArticleColumns.PARAGRAPH_5}};
+
                                 String elementName = mContext.getResources().getString(R.string.html_body_name);
                                 Document doc = Jsoup.parse(response.body().string());
                                 Element element = doc.select(elementName).first();
@@ -154,11 +166,11 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
                                 ContentValues values = new ContentValues();
                                 values.put(ArticleContract.ArticleColumns.IMG_URL, imgUrl);
                                 values.put(ArticleContract.ArticleColumns.BODY, articleBody);
-                                values.put(ArticleContract.ArticleColumns.BULLETPOINT_1, bulletPoints[0][0]);
-                                values.put(ArticleContract.ArticleColumns.BULLETPOINT_2, bulletPoints[1][0]);
-                                values.put(ArticleContract.ArticleColumns.BULLETPOINT_3, bulletPoints[2][0]);
-                                values.put(ArticleContract.ArticleColumns.BULLETPOINT_4, bulletPoints[3][0]);
-                                values.put(ArticleContract.ArticleColumns.BULLETPOINT_5, bulletPoints[4][0]);
+
+                                for (int i = 0; i < columns.length; i += 1) {
+                                    values.put(columns[i][0], bulletPoints[i][0]);
+                                    values.put(columns[i][1], bulletPoints[i][1]);
+                                }
 
                                 int num = mContext.getContentResolver().update(
                                         ArticleProvider.Articles.CONTENT_URI,
@@ -187,7 +199,6 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
     }
 
     /**
-     *
      * @param success
      */
     protected void onPostExecute(Boolean success) {
