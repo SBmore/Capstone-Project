@@ -11,7 +11,7 @@
 
     <dimen name="bulletpoint_margin">112dp</dimen>
     <dimen name="detail_bar_text_margin">112dp</dimen>
-    <dimen name="detail_photo_height">248dp</dimen>
+    <dimen name="detail_photo_height">320dp</dimen>
     <dimen name="bulletpoint_block_bottom">70dp</dimen>
 
     <dimen name="logo_top">4dp</dimen>

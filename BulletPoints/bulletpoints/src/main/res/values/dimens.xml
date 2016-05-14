@@ -52,7 +52,7 @@
     <!-- Paragraph -->
     <dimen name="paragraph_padding">16dp</dimen>
 
-    <dimen name="detail_photo_height">280dp</dimen>
+    <dimen name="detail_photo_height">400dp</dimen>
 
     <!-- Elevation -->
     <dimen name="card_elevation">2dp</dimen>
