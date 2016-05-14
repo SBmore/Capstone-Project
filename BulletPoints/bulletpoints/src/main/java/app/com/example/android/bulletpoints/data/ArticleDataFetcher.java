@@ -87,8 +87,7 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
                     // Figure out if the article is already in the database to know whether to create
                     // it or update it
                     if (cursor != null) {
-                        cursor.moveToFirst();
-                        exists = !cursor.isAfterLast();
+                        exists = true;
                         cursor.close();
                     }
 
@@ -194,7 +193,7 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
 
         } catch (Exception e) {
             this.exception = e;
-            return false;
+            return null;
         }
     }
 
@@ -202,7 +201,6 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
      * @param success
      */
     protected void onPostExecute(Boolean success) {
-        // TODO: check this.exception
         if (!success) {
             Utilities.toastNoNetword(mContext);
         }
