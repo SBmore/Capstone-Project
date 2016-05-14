@@ -112,20 +112,24 @@ public class DetailActivityFragment extends Fragment {
 
             if (cursor != null) {
                 cursor.moveToFirst();
+
+                final String articleLink = cursor.getString(COL_ARTICLE_LINK);
                 String img_url = cursor.getString(COL_ARTICLE_IMG_URL);
                 String title = cursor.getString(COL_ARTICLE_TITLE);
-                final String articleLink = cursor.getString(COL_ARTICLE_LINK);
                 String subtitle = Utilities.formatDate(cursor.getLong(COL_ARTICLE_PUB_DATE));
+
                 TextView titleTextView = (TextView) root.findViewById(R.id.detail_title);
                 titleTextView.setTypeface(robotoReg);
+                titleTextView.setText(title);
+
                 TextView descriptionTextView = (TextView) root.findViewById(R.id.detail_subtitle);
                 descriptionTextView.setTypeface(robotoReg);
+                descriptionTextView.setText(subtitle);
+
                 ImageView view = (ImageView) root.findViewById(R.id.article_photo);
+                Glide.with(getContext()).load(img_url).centerCrop().into(view);
 
                 setBulletpoints(root, cursor);
-                titleTextView.setText(title);
-                descriptionTextView.setText(subtitle);
-                Glide.with(getContext()).load(img_url).centerCrop().into(view);
                 cursor.close();
 
                 mArticleShareText = Utilities.formatShareText(title, articleLink, SHARE_HASHTAG);
