@@ -31,13 +31,13 @@ public class QueryHelper {
         return context.getContentResolver().update(
                 ArticleProvider.Articles.CONTENT_URI,
                 values,
-                ArticleContract.ArticleColumns.TITLE + "= ?",
+                ArticleContract.ArticleColumns.TITLE + " LIKE ?",
                 new String[]{title}
         );
     }
 
     public static Uri insert(Context context, ContentValues value) {
-         return context.getContentResolver().insert(
+        return context.getContentResolver().insert(
                 ArticleProvider.Articles.CONTENT_URI,
                 value
         );

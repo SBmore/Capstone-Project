@@ -184,7 +184,7 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
      * @param success
      */
     protected void onPostExecute(Boolean success) {
-        if (!success) {
+        if (success != null && !success) {
             Utilities.toastNoNetword(mContext);
         }
     }
