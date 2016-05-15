@@ -29,11 +29,12 @@ import app.com.example.android.bulletpoints.data.BulletPointDisplayData;
 import app.com.example.android.bulletpoints.data.QueryHelper;
 
 public class DetailActivityFragment extends Fragment {
-    public final static String EXTRA_ID = "extra_id";
     private final static String SHARE_HASHTAG = "#BulletPoints";
     public static final int MAX_BULLETPOINTS = 5;
     private ShareActionProvider mShareActionProvider;
     private String mArticleShareText;
+    private static Long mId;
+
     private static final String[] ARTICLE_COLUMNS = {
             ArticleContract.ArticleColumns._ID,
             ArticleContract.ArticleColumns.TITLE,
@@ -92,17 +93,18 @@ public class DetailActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_detail_activity, container, false);
-        Typeface robotoReg = Typeface.createFromAsset(getContext().getResources().getAssets(), "Roboto-Regular.ttf");
+        Typeface robotoReg = Typeface.createFromAsset(
+                getContext().getResources().getAssets(), "Roboto-Regular.ttf");
 
-        long id = -1;
         Bundle arguments = getArguments();
         if (arguments != null) {
-            id = arguments.getLong(EXTRA_ID);
+            if (arguments.containsKey(MainActivityFragment.LAYOUT_POSITION_KEY)) {
+                mId = arguments.getLong(MainActivityFragment.LAYOUT_POSITION_KEY);
+            }
         }
 
-        // TODO: temporary to test loading a picture
-        if (id > -1) {
-            Cursor cursor = QueryHelper.getById(getContext(), ARTICLE_COLUMNS, Long.toString(id));
+        if (mId != null) {
+            Cursor cursor = QueryHelper.getById(getContext(), ARTICLE_COLUMNS, Long.toString(mId));
 
             if (cursor != null) {
                 cursor.moveToFirst();

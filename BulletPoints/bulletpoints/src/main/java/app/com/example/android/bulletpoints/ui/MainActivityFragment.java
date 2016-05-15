@@ -37,6 +37,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     private static Bundle mListState;
 
     private static final String LAYOUT_STATE_KEY = "layout_state_key";
+    public static final String LAYOUT_POSITION_KEY = "layout_position_key";
     private static final String[] ARTICLE_COLUMNS = {
             ArticleContract.ArticleColumns._ID,
             ArticleContract.ArticleColumns.TITLE,
@@ -101,7 +102,10 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
         if (mListState != null) {
             Parcelable listState = mListState.getParcelable(LAYOUT_STATE_KEY);
-            mRecyclerView.getLayoutManager().onRestoreInstanceState(listState);
+            RecyclerView.LayoutManager manager = mRecyclerView.getLayoutManager();
+            if (manager != null) {
+                manager.onRestoreInstanceState(listState);
+            }
         }
     }
 

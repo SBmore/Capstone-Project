@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide;
 
 import app.com.example.android.bulletpoints.R;
 import app.com.example.android.bulletpoints.ui.DetailActivity;
-import app.com.example.android.bulletpoints.ui.DetailActivityFragment;
 import app.com.example.android.bulletpoints.ui.MainActivityFragment;
 
 /**
@@ -47,7 +46,7 @@ public class ArticleAdaptor extends RecyclerView.Adapter<ArticleAdaptor.ViewHold
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailActivity.class);
-                intent.putExtra(DetailActivityFragment.EXTRA_ID,
+                intent.putExtra(MainActivityFragment.LAYOUT_POSITION_KEY,
                         getItemId(viewHolder.getAdapterPosition()));
                 context.startActivity(intent);
             }
