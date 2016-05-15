@@ -29,6 +29,7 @@ public class DetailParagraphFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_detail_paragraph, container);
         TextView textView = (TextView) view.findViewById(R.id.paragraph_text);
         textView.setText(mParagraphText);
+        textView.setContentDescription(mParagraphText + getString(R.string.paragraph_close_help));
 
         return view;
     }

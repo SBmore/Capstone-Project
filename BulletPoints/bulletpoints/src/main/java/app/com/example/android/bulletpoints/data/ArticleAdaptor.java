@@ -60,10 +60,12 @@ public class ArticleAdaptor extends RecyclerView.Adapter<ArticleAdaptor.ViewHold
     @Override
     public void onBindViewHolder(ArticleAdaptor.ViewHolder holder, int position) {
         this.cursor.moveToPosition(position);
+        String title = this.cursor.getString(MainActivityFragment.COL_ARTICLE_TITLE);
         String img_url = this.cursor.getString(MainActivityFragment.COL_ARTICLE_IMG_URL);
-        Log.v(TAG, "Adaptor: " + this.cursor.getString(MainActivityFragment.COL_ARTICLE_TITLE));
 
-        holder.titleView.setText(this.cursor.getString(MainActivityFragment.COL_ARTICLE_TITLE));
+        Log.v(TAG, "Adaptor: " + title);
+
+        holder.titleView.setText(title);
         holder.titleView.setTypeface(this.robotoThin);
         holder.descriptionView.setText(this.cursor.getString(MainActivityFragment.COL_ARTICLE_DESCRIPTION));
         holder.descriptionView.setTypeface(this.robotoReg);

@@ -122,8 +122,9 @@ public class DetailActivityFragment extends Fragment {
                 descriptionTextView.setTypeface(robotoReg);
                 descriptionTextView.setText(subtitle);
 
-                ImageView view = (ImageView) root.findViewById(R.id.article_photo);
-                Glide.with(getContext()).load(img_url).centerCrop().into(view);
+                ImageView imageView = (ImageView) root.findViewById(R.id.article_photo);
+                imageView.setContentDescription(getString(R.string.image_indicator) + title);
+                Glide.with(getContext()).load(img_url).centerCrop().into(imageView);
 
                 setBulletpoints(root, cursor);
                 cursor.close();
@@ -163,6 +164,8 @@ public class DetailActivityFragment extends Fragment {
             final BulletPointDisplayData bulletpoint = bulletpoints[i];
             TextView bpText = (TextView) bulletpoint.getTextView().findViewById(R.id.bulletpoint_text);
             bpText.setText(bulletpoint.getBulletpoint());
+            bulletpoint.getTextView().setContentDescription(bulletpoint.getBulletpoint() +
+                    getString(R.string.paragraph_open_help));
 
             bpText.setOnClickListener(new View.OnClickListener() {
                 @Override
