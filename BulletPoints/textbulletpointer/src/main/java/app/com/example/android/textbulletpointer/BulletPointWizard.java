@@ -54,12 +54,12 @@ public class BulletPointWizard {
 
         ArrayList<String> sentences = getSentences(body);
         sentences = filterExtremeStrings(sentences);
-        // set first bulletpoint and its paragraph
+        // set first bulletpoint and its extra detail
         bulletpoints[0][0] = sentences.get(0);
-        bulletpoints[0][1] = getParagraph(sentences, 0);
+        bulletpoints[0][1] = getMoreDetail(sentences, 0);
 
         bulletpoints[4][0] = sentences.get(sentences.size() - 1);
-        bulletpoints[4][1] = getParagraph(sentences, sentences.size() - 1);
+        bulletpoints[4][1] = getMoreDetail(sentences, sentences.size() - 1);
 
         sentences.remove(0);
         sentences.remove(sentences.size() - 1);
@@ -76,11 +76,11 @@ public class BulletPointWizard {
 
         // Give all the bulletpoints a default value to avoid blanks
         bulletpoints[1][0] = snapshot.get(0);
-        bulletpoints[1][1] = getParagraph(snapshot, 0);
+        bulletpoints[1][1] = getMoreDetail(snapshot, 0);
         bulletpoints[2][0] = snapshot.get(sentences.size() / 2);
-        bulletpoints[2][1] = getParagraph(snapshot, sentences.size() / 2);
+        bulletpoints[2][1] = getMoreDetail(snapshot, sentences.size() / 2);
         bulletpoints[3][0] = snapshot.get(snapshot.size() - 1);
-        bulletpoints[3][1] = getParagraph(snapshot, snapshot.size() - 1);
+        bulletpoints[3][1] = getMoreDetail(snapshot, snapshot.size() - 1);
 
         int num = 0;
         for (String sentence : sentenceScores.keySet()) {
@@ -168,21 +168,28 @@ public class BulletPointWizard {
     }
 
     /**
-     * Splits a body of text into an ArrayList of the sentences that make it up.
+     * Splits a body of text into an ArrayList of the sentences that make it up. Original logic
+     * from http://stackoverflow.com/questions/2687012/split-string-into-sentences. Change to
+     * clean the results.
      *
      * @param text the body of text to split up
      * @return an ArrayList of sentences
      */
     private ArrayList<String> getSentences(String text) {
         ArrayList<String> sentences = new ArrayList<>();
-        // http://stackoverflow.com/questions/2687012/split-string-into-sentences
+
         BreakIterator iterator = BreakIterator.getSentenceInstance(Locale.UK);
         iterator.setText(text);
         int start = iterator.first();
         for (int end = iterator.next();
              end != BreakIterator.DONE;
              start = end, end = iterator.next()) {
-            sentences.add(text.substring(start, end).trim());
+            String sentence = text.substring(start, end).trim();
+            if (sentence.startsWith(",")) {
+                sentences.add(sentence.substring(1));
+            } else {
+                sentences.add(sentence);
+            }
         }
         return sentences;
     }
@@ -194,14 +201,14 @@ public class BulletPointWizard {
      * @return the cleaned body
      */
     private String removeHtmlArtifacts(String body) {
-        String[] UNBREAKABLE = {"\u00A0", ""};
-        String[] IMAGE = {"[object Object]", ""};
-        String[] NEWLINE1 = {".,", ".\n"};
+        String[] UNBREAKABLE = {"\u00A0", " "};
         String[] QUOTE = {"&quot;", "\""};
         String[] QUOTE_END = {".\",", ".\"\n"};
+        String[] IMAGE = {"[object Object]", ""};
         String[] AMPERSAND = {"&amp;", "&"};
         String[] APOSTROPHE = {"&#39;", "'"};
-        String[][] artifacts = {UNBREAKABLE, QUOTE, QUOTE_END, IMAGE, NEWLINE1, AMPERSAND, APOSTROPHE};
+        String[] NEWLINE1 = {".,", ".\n"};
+        String[][] artifacts = {UNBREAKABLE, QUOTE, QUOTE_END, IMAGE, AMPERSAND, APOSTROPHE, NEWLINE1};
 
         for (int i = 0; i < artifacts.length; i += 1) {
             if (body.contains(artifacts[i][0])) {
@@ -246,9 +253,17 @@ public class BulletPointWizard {
                 numOfStrings > BULLETS_NUM);
     }
 
-    private String getParagraph(ArrayList<String> sentences, int index) {
+    /**
+     * Uses an index to generate more detail with the sentences around the sentence that the index
+     * refers to.
+     *
+     * @param sentences an ArrayList of strings that contain sentences to choose from
+     * @param index     the position in the list to generate more detail around
+     * @return          the detail generated
+     */
+    private String getMoreDetail(ArrayList<String> sentences, int index) {
         int num = 3;
-        String paragraph = "";
+        String moreDetail = "";
 
         if (index > 0 && index < sentences.size() - 1) {
             // middle of list, get sentence before and after
@@ -260,10 +275,10 @@ public class BulletPointWizard {
 
         for (int i = 0; i < num; i += 1) {
             if (index + i < sentences.size()) {
-                paragraph += sentences.get(index + i) + "\n";
+                moreDetail += sentences.get(index + i) + "\n\n";
             }
         }
 
-        return paragraph.trim();
+        return moreDetail.trim();
     }
 }
