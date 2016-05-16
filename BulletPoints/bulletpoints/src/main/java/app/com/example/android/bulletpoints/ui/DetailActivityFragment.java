@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +22,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
+import app.com.example.android.bulletpoints.App;
 import app.com.example.android.bulletpoints.R;
 import app.com.example.android.bulletpoints.Utilities;
 import app.com.example.android.bulletpoints.data.ArticleContract;
@@ -29,11 +33,13 @@ import app.com.example.android.bulletpoints.data.BulletPointDisplayData;
 import app.com.example.android.bulletpoints.data.QueryHelper;
 
 public class DetailActivityFragment extends Fragment {
+    private final static String TAG = DetailActivityFragment.class.getSimpleName();
     private final static String SHARE_HASHTAG = "#BulletPoints";
     public static final int MAX_BULLETPOINTS = 5;
     private ShareActionProvider mShareActionProvider;
     private String mArticleShareText;
     private static Long mId;
+    private static Tracker mTracker;
 
     private static final String[] ARTICLE_COLUMNS = {
             ArticleContract.ArticleColumns._ID,
@@ -75,6 +81,10 @@ public class DetailActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        // Obtain the shared Tracker instance.
+        App application = (App) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     @Override
@@ -83,6 +93,19 @@ public class DetailActivityFragment extends Fragment {
         inflater.inflate(R.menu.detail_main, menu);
         MenuItem menuItem = menu.findItem(R.id.action_share);
         mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        mShareActionProvider.setOnShareTargetSelectedListener(new ShareActionProvider.OnShareTargetSelectedListener() {
+            @Override
+            public boolean onShareTargetSelected(ShareActionProvider source, Intent intent) {
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory(getContext().getString(R.string.ga_cat_article))
+                        .setAction(getContext().getString(R.string.ga_act_share))
+                        .setLabel(getContext().getString(R.string.ga_lbl_sky_world))
+                        .build());
+
+                return false;
+            }
+        });
+
 
         if (mArticleShareText != null) {
             mShareActionProvider.setShareIntent(createShareIntent());
@@ -138,6 +161,12 @@ public class DetailActivityFragment extends Fragment {
                 root.findViewById(R.id.goto_doc_fab).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        mTracker.send(new HitBuilders.EventBuilder()
+                                .setCategory(getContext().getString(R.string.ga_cat_article))
+                                .setAction(getContext().getString(R.string.ga_act_view))
+                                .setLabel(getContext().getString(R.string.ga_lbl_sky_world))
+                                .build());
+
                         Intent intent = new Intent();
                         intent.setAction(Intent.ACTION_VIEW);
                         intent.setData(Uri.parse(articleLink));
@@ -157,6 +186,15 @@ public class DetailActivityFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.i(TAG, "Setting screen name: " + TAG);
+        mTracker.setScreenName(TAG);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
     private void setBulletpoints(View root, Cursor cursor) {
         BulletPointDisplayData[] bulletpoints = bulletpointMapper(cursor, root);
 
@@ -170,6 +208,12 @@ public class DetailActivityFragment extends Fragment {
             bpText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory(getContext().getString(R.string.ga_cat_bullet))
+                            .setAction(getContext().getString(R.string.ga_act_click))
+                            .setLabel(getContext().getString(R.string.ga_lbl_sky_world))
+                            .build());
+
                     showParagraph(bulletpoint.getParagraph());
                 }
             });

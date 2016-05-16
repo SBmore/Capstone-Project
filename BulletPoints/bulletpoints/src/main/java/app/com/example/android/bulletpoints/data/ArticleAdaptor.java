@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import app.com.example.android.bulletpoints.R;
 import app.com.example.android.bulletpoints.ui.DetailActivity;
@@ -25,16 +27,16 @@ public class ArticleAdaptor extends RecyclerView.Adapter<ArticleAdaptor.ViewHold
     private final static String TAG = "ARTICLE_ADAPTOR";
     private final Cursor cursor;
     private final Context context;
+    private final Tracker tracker;
     private Typeface robotoReg;
     private Typeface robotoThin;
 
-    public ArticleAdaptor(Context context, Cursor cursor) {
+    public ArticleAdaptor(Context context, Cursor cursor, Tracker tracker) {
         robotoReg = Typeface.createFromAsset(context.getResources().getAssets(), "Roboto-Regular.ttf");
         robotoThin = Typeface.createFromAsset(context.getResources().getAssets(), "Roboto-Light.ttf");
         this.context = context;
         this.cursor = cursor;
-
-        Log.v(TAG, "Adaptor constructor called");
+        this.tracker = tracker;
     }
 
     @Override
@@ -45,6 +47,13 @@ public class ArticleAdaptor extends RecyclerView.Adapter<ArticleAdaptor.ViewHold
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Google Analytics for article click
+                tracker.send(new HitBuilders.EventBuilder()
+                        .setCategory(context.getString(R.string.ga_cat_article))
+                        .setAction(context.getString(R.string.ga_act_click))
+                        .setLabel(context.getString(R.string.ga_lbl_sky_world))
+                        .build());
+
                 Intent intent = new Intent(context, DetailActivity.class);
                 intent.putExtra(MainActivityFragment.LAYOUT_POSITION_KEY,
                         getItemId(viewHolder.getAdapterPosition()));

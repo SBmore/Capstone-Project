@@ -9,6 +9,18 @@
     <string name="admob_list_banner_unit_id" translatable="false">ca-app-pub-9605228635846962/5274120330</string>
     <string name="admob_detail_banner_unit_id" translatable="false">ca-app-pub-9605228635846962/3518185539</string>
 
+    <!-- Google Analytics -->
+    <!-- - Categories -->
+    <string name="ga_cat_article" translatable="false">Article</string>
+    <string name="ga_cat_bullet" translatable="false">Bulletpoint</string>
+    <string name="ga_cat_detail" translatable="false">Detail</string>
+    <!-- - Actions -->
+    <string name="ga_act_click" translatable="false">Click</string>
+    <string name="ga_act_share" translatable="false">Share</string>
+    <string name="ga_act_view" translatable="false">View Full</string>
+    <!-- - Labels -->
+    <string name="ga_lbl_sky_world" translatable="false">Sky News World</string>
+
     <!-- Google Url Shortener -->
     <string name="url_shortener_api_key" translatable="false">AIzaSyBxNbLMVIVPSB7VUA9YB4DYacYuHJ63rbY</string>
 

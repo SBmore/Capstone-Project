@@ -3,6 +3,7 @@ package app.com.example.android.bulletpoints.ui;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
@@ -11,13 +12,17 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
+import app.com.example.android.bulletpoints.App;
 import app.com.example.android.bulletpoints.R;
 import app.com.example.android.bulletpoints.Utilities;
 import app.com.example.android.bulletpoints.data.ArticleAdaptor;
@@ -35,6 +40,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ArticleAdaptor mArticleAdaptor;
     private static Bundle mListState;
+    private static Tracker mTracker;
 
     private static final String LAYOUT_STATE_KEY = "layout_state_key";
     public static final String LAYOUT_POSITION_KEY = "layout_position_key";
@@ -56,6 +62,15 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     public static final int COL_ARTICLE_IMG_URL = 5;
 
     public MainActivityFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Obtain the shared Tracker instance.
+        App application = (App) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     @Override
@@ -100,6 +115,10 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     public void onResume() {
         super.onResume();
 
+        Log.i(TAG, "Setting screen name: " + TAG);
+        mTracker.setScreenName(TAG);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
         if (mListState != null) {
             Parcelable listState = mListState.getParcelable(LAYOUT_STATE_KEY);
             RecyclerView.LayoutManager manager = mRecyclerView.getLayoutManager();
@@ -135,7 +154,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         FragmentActivity activity = getActivity();
-        mArticleAdaptor = new ArticleAdaptor(activity, data);
+        mArticleAdaptor = new ArticleAdaptor(activity, data, mTracker);
         mArticleAdaptor.setHasStableIds(true);
         mRecyclerView.setAdapter(mArticleAdaptor);
 
