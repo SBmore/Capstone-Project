@@ -31,7 +31,7 @@ public class QueryHelper {
         return context.getContentResolver().update(
                 ArticleProvider.Articles.CONTENT_URI,
                 values,
-                ArticleContract.ArticleColumns.TITLE + " LIKE ?",
+                ArticleContract.ArticleColumns.TITLE + "= ?",
                 new String[]{title}
         );
     }

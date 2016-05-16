@@ -46,9 +46,9 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
      * Fetches data from the supplied RSS feed, extracts the data and then writes it to the
      * database
      *
-     * @param urls  the RSS feed links to grab data from
-     * @return      <code>true</code> if the data was successfully gathered and written to the
-     *              database. <code>false</code> otherwise.
+     * @param urls the RSS feed links to grab data from
+     * @return <code>true</code> if the data was successfully gathered and written to the
+     * database. <code>false</code> otherwise.
      */
     protected Boolean doInBackground(String... urls) {
         String title;
@@ -83,7 +83,7 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
                     // Figure out if the article is already in the database to know whether to create
                     // it or update it
                     if (cursor != null) {
-                        exists = true;
+                        exists = cursor.moveToFirst();
                         cursor.close();
                     }
 
@@ -145,7 +145,7 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
                                 String imgUrl = jo.get("image").getAsString();
                                 String articleBody = jo.get("articleBody").getAsString();
 
-                                Log.v(TAG, "Updated img: " + imgUrl);
+                                Log.v(TAG, "Updating img: " + imgUrl);
 
                                 BulletPointWizard bulletPointWizard = new BulletPointWizard();
                                 String[][] bulletPoints = bulletPointWizard.getBulletPoints(articleBody);
@@ -175,13 +175,16 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
             }
 
         } catch (Exception e) {
+            Log.e(TAG, e.toString());
             this.exception = e;
             return null;
         }
     }
 
     /**
-     * @param success
+     * Checks if the data fetcher had any issues and displays a relevant toast.
+     *
+     * @param success   a boolean where <code>true</code> shows data was collected successfully
      */
     protected void onPostExecute(Boolean success) {
         if (success != null && !success) {
