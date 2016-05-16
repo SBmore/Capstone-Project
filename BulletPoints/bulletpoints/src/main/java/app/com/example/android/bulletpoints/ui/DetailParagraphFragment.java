@@ -31,6 +31,15 @@ public class DetailParagraphFragment extends DialogFragment {
         textView.setText(mParagraphText);
         textView.setContentDescription(mParagraphText + getString(R.string.paragraph_close_help));
 
+        // Dismiss dialog if the user clicks anywhere
+        getDialog().setCanceledOnTouchOutside(true);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DetailParagraphFragment.this.dismiss();
+            }
+        });
+
         return view;
     }
 }
