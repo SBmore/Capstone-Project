@@ -72,4 +72,17 @@
     <dimen name="list_subtitle_text_size">12sp</dimen>
     <dimen name="detail_title_text_size">14sp</dimen>
     <dimen name="detail_subtitle_text_size">10sp</dimen>
+
+    <!-- Widget -->
+    <integer name="widget_refresh_rate">1800000</integer>
+    <integer name="widget_titleview_weight">1</integer>
+    <dimen name="widget_min_height">100dp</dimen>
+    <dimen name="widget_min_resize_height">100dp</dimen>
+    <dimen name="widget_min_resize_width">100dp</dimen>
+    <dimen name="widget_min_width">100dp</dimen>
+    <dimen name="widget_layout_margin">6dp</dimen>
+    <dimen name="widget_titlebar_padding">6dp</dimen>
+    <dimen name="widget_logo_size">32dp</dimen>
+    <dimen name="widget_title_margin">8dp</dimen>
+    <dimen name="widget_title_separator">1dp</dimen>
 </resources>

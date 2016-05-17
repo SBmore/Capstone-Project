@@ -6,7 +6,9 @@
 
     <color name="white">#FFFFFF</color>
     <color name="grey">#88FFFFFF</color>
+    <color name="grey_300">#E0E0E0</color>
     <color name="grey_600">#757575</color>
+    <color name="grey_800">#424242</color>
     <color name="black">#8d000000</color>
     <color name="transparent">#1a000000</color>
     <color name="blank">#00000000</color>

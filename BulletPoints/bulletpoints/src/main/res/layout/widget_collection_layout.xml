@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/widget_layout_margin"
+    android:background="@color/grey"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/widget_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey_300"
+        android:orientation="horizontal"
+        android:padding="@dimen/widget_titlebar_padding">
+
+        <ImageView
+            android:id="@+id/widget_logo"
+            android:layout_width="@dimen/widget_logo_size"
+            android:layout_height="@dimen/widget_logo_size"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/widget_app_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="@integer/widget_titleview_weight"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/widget_title_margin"
+            android:text="@string/app_name"
+            android:textColor="@color/grey_800"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/widget_title_separator"
+        android:background="@color/colorAccent" />
+
+    <ListView
+        android:id="@+id/widget_data_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
