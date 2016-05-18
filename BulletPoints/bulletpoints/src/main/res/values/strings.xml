@@ -21,6 +21,9 @@
     <!-- - Labels -->
     <string name="ga_lbl_sky_world" translatable="false">Sky News World</string>
 
+    <!-- Widget -->
+    <string name="widget_no_data" translatable="true">Data unavailable</string>
+
     <!-- Google Url Shortener -->
     <string name="url_shortener_api_key" translatable="false">AIzaSyBxNbLMVIVPSB7VUA9YB4DYacYuHJ63rbY</string>
 

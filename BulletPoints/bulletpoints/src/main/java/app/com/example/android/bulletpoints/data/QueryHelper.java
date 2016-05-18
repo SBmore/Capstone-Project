@@ -27,6 +27,17 @@ public class QueryHelper {
                 null);
     }
 
+    public static Cursor getLatest(Context context, String[] cols, int num) {
+        String sortOrder = ArticleContract.ArticleColumns.PUB_DATE + " DESC";
+        String limit = " LIMIT " + num;
+        return context.getContentResolver().query(
+                ArticleProvider.Articles.CONTENT_URI,
+                cols,
+                null,
+                null,
+                sortOrder + limit);
+    }
+
     public static int updateByTitle(Context context, ContentValues values, String title) {
         return context.getContentResolver().update(
                 ArticleProvider.Articles.CONTENT_URI,
