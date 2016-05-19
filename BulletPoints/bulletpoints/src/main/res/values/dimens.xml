@@ -76,10 +76,10 @@
     <!-- Widget -->
     <integer name="widget_refresh_rate">1800000</integer>
     <integer name="widget_titleview_weight">1</integer>
-    <dimen name="widget_min_height">100dp</dimen>
+    <dimen name="widget_min_height">180dp</dimen>
     <dimen name="widget_min_resize_height">100dp</dimen>
     <dimen name="widget_min_resize_width">100dp</dimen>
-    <dimen name="widget_min_width">100dp</dimen>
+    <dimen name="widget_min_width">250dp</dimen>
     <dimen name="widget_layout_margin">6dp</dimen>
     <dimen name="widget_titlebar_padding">6dp</dimen>
     <dimen name="widget_logo_size">32dp</dimen>
