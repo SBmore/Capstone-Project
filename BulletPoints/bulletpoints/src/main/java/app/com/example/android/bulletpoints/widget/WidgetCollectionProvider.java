@@ -30,8 +30,10 @@ public class WidgetCollectionProvider extends AppWidgetProvider {
             RemoteViews view = initViews(context, appWidgetManager, widgetId);
 
             Intent intent = new Intent(context, DetailActivity.class);
+            intent.setAction(ACTION_LAUNCH);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-            view.setOnClickPendingIntent(R.id.widget, pendingIntent);
+            view.setPendingIntentTemplate(R.id.widget_data_list, pendingIntent);
 
             appWidgetManager.updateAppWidget(widgetId, view);
         }
