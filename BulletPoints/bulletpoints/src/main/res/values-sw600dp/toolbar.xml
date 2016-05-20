@@ -1,0 +1,3 @@
+<resources>
+    <item name="toolbar" type="layout">@layout/toolbar_standard</item>
+</resources>

@@ -1,0 +1,52 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="app.com.example.android.bulletpoints.ui.MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="?colorPrimary">
+
+        <include layout="@layout/toolbar" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:baselineAligned="false"
+        android:paddingTop="?actionBarSize"
+        android:divider="?android:attr/dividerHorizontal"
+        android:orientation="horizontal">
+
+        <fragment
+            android:id="@+id/fragment_main"
+            android:name="app.com.example.android.bulletpoints.ui.MainActivityFragment"
+            android:layout_width="@dimen/master_detail_fragment_width"
+            android:layout_height="match_parent"
+            android:layout_weight="@integer/master_detail_list_weight"
+            tools:layout="@layout/fragment_main" />
+
+        <FrameLayout
+            android:id="@+id/activity_detail"
+            android:layout_width="@dimen/master_detail_fragment_width"
+            android:layout_height="match_parent"
+            android:layout_weight="@integer/master_detail_detail_weight" />
+
+    </LinearLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/listAdView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="@dimen/list_advert_bottom_margin"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/admob_list_banner_unit_id_test">
+
+    </com.google.android.gms.ads.AdView>
+</FrameLayout>
