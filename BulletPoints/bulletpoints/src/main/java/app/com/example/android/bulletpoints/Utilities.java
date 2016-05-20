@@ -1,8 +1,10 @@
 package app.com.example.android.bulletpoints;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -93,5 +95,17 @@ public class Utilities {
         String text = context.getString(R.string.err_no_network);
         Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    /**
+     * Creates a share intent that will share the text that is passed in
+     * @param shareText     the text to share
+     * @return              the share intent
+     */
+    public static Intent createShareIntent(String shareText) {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+        return shareIntent;
     }
 }
