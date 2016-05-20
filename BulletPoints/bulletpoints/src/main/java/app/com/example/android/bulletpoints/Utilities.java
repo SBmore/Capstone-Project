@@ -22,8 +22,14 @@ import java.util.Locale;
  */
 public class Utilities {
 
+    /**
+     * Source:          http://stackoverflow.com/questions/18372672/how-do-i-use-the-google-url-shortener-api-on-android
+     * User:            Liu Ocean
+     * @param context   used to get the api key from strings.xml
+     * @param longUrl   the URL, as a string, to be shortened
+     * @return
+     */
     public static String shortenUrl(Context context, String longUrl) {
-        // http://stackoverflow.com/questions/18372672/how-do-i-use-the-google-url-shortener-api-on-android
         Urlshortener.Builder builder = new Urlshortener.Builder(AndroidHttp.newCompatibleTransport(),
                 GsonFactory.getDefaultInstance(), null);
         Urlshortener urlshortener = builder.build();
@@ -36,6 +42,7 @@ public class Utilities {
             url = insert.execute();
             return url.getId();
         } catch (IOException e) {
+            Log.e(context.getPackageName(), e.toString());
             return null;
         }
     }
@@ -44,10 +51,10 @@ public class Utilities {
      * Take in the three elements that make up the share text and format them to ensure that they
      * stay 140 characters or under to ensure the share text works with twitter
      *
-     * @param text    main text that explains what is being shared
-     * @param link    a url as a string that should have been shortened
-     * @param hashtag the hashtag to add onto the end
-     * @return the formatted share text (140 characters or less)
+     * @param text      main text that explains what is being shared
+     * @param link      a url as a string that should have been shortened
+     * @param hashtag   the hashtag to add onto the end
+     * @return          the formatted share text (140 characters or less)
      */
     public static String formatShareText(String text, String link, String hashtag) {
         int lengthLimit = 140;
@@ -91,6 +98,10 @@ public class Utilities {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+    /**
+     * Shows a common toast to avoid code duplication
+     * @param context   where to show the toast
+     */
     public static void toastNoNetword(Context context) {
         String text = context.getString(R.string.err_no_network);
         Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
