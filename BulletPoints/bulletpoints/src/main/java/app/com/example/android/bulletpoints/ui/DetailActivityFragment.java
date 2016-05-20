@@ -40,6 +40,7 @@ public class DetailActivityFragment extends Fragment {
     private String mArticleShareText;
     private static Long mId;
     private static Tracker mTracker;
+    public boolean mIsTablet;
 
     private static final String[] ARTICLE_COLUMNS = {
             ArticleContract.ArticleColumns._ID,
@@ -77,10 +78,19 @@ public class DetailActivityFragment extends Fragment {
     public DetailActivityFragment() {
     }
 
+    /**
+     * Callback that provides MainActivity the text to be shared for when the app is running on a
+     * tablet
+     */
+    public interface ShareCallback {
+        void onSharePrepared(String shareText);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mIsTablet = getResources().getBoolean(R.bool.tablet);
 
         // Obtain the shared Tracker instance.
         App application = (App) getActivity().getApplication();
@@ -89,26 +99,28 @@ public class DetailActivityFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.detail_main, menu);
-        MenuItem menuItem = menu.findItem(R.id.action_share);
-        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
-        mShareActionProvider.setOnShareTargetSelectedListener(new ShareActionProvider.OnShareTargetSelectedListener() {
-            @Override
-            public boolean onShareTargetSelected(ShareActionProvider source, Intent intent) {
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory(getContext().getString(R.string.ga_cat_article))
-                        .setAction(getContext().getString(R.string.ga_act_share))
-                        .setLabel(getContext().getString(R.string.ga_lbl_sky_world))
-                        .build());
+        if (!mIsTablet) {
+            // If the app is not running on a tablet then the options menu is handled here
+            menu.clear();
+            inflater.inflate(R.menu.detail_main, menu);
+            MenuItem menuItem = menu.findItem(R.id.action_share);
+            mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+            mShareActionProvider.setOnShareTargetSelectedListener(new ShareActionProvider.OnShareTargetSelectedListener() {
+                @Override
+                public boolean onShareTargetSelected(ShareActionProvider source, Intent intent) {
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory(getContext().getString(R.string.ga_cat_article))
+                            .setAction(getContext().getString(R.string.ga_act_share))
+                            .setLabel(getContext().getString(R.string.ga_lbl_sky_world))
+                            .build());
 
-                return false;
+                    return false;
+                }
+            });
+
+            if (mArticleShareText != null) {
+                mShareActionProvider.setShareIntent(Utilities.createShareIntent(mArticleShareText));
             }
-        });
-
-
-        if (mArticleShareText != null) {
-            mShareActionProvider.setShareIntent(createShareIntent());
         }
     }
 
@@ -153,9 +165,15 @@ public class DetailActivityFragment extends Fragment {
                 cursor.close();
 
                 mArticleShareText = Utilities.formatShareText(title, articleLink, SHARE_HASHTAG);
-                // If onCreateOptionsMenu has already happened, we need to update the share intent now.
-                if (mShareActionProvider != null) {
-                    mShareActionProvider.setShareIntent(createShareIntent());
+
+                if (mIsTablet) {
+                    // Pass back the share text to the MainActivity
+                    ((ShareCallback) getActivity()).onSharePrepared(mArticleShareText);
+                } else {
+                    // If onCreateOptionsMenu has already happened, we need to update the share intent now.
+                    if (mShareActionProvider != null) {
+                        mShareActionProvider.setShareIntent(Utilities.createShareIntent(mArticleShareText));
+                    }
                 }
 
                 root.findViewById(R.id.goto_doc_fab).setOnClickListener(new View.OnClickListener() {
@@ -176,12 +194,15 @@ public class DetailActivityFragment extends Fragment {
             }
         }
 
-        // Banner Ad
-        AdView mAdView = (AdView) root.findViewById(R.id.detailAdView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-        mAdView.loadAd(adRequest);
+        // The tablet version has one ad that shows via MainActivity so don't load this one
+        if (!mIsTablet) {
+            // Banner Ad
+            AdView mAdView = (AdView) root.findViewById(R.id.detailAdView);
+            AdRequest adRequest = new AdRequest.Builder()
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .build();
+            mAdView.loadAd(adRequest);
+        }
 
         return root;
     }
@@ -236,16 +257,10 @@ public class DetailActivityFragment extends Fragment {
         return bulletpoints;
     }
 
-    private Intent createShareIntent() {
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, mArticleShareText);
-        return shareIntent;
-    }
-
     private void showParagraph(String text) {
+        String tag = "paragraph";
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         DetailParagraphFragment paragraph = DetailParagraphFragment.newInstance(text);
-        paragraph.show(fragmentManager, "paragraph");
+        paragraph.show(fragmentManager, tag);
     }
 }

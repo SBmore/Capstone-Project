@@ -10,6 +10,7 @@ import android.widget.RemoteViews;
 
 import app.com.example.android.bulletpoints.R;
 import app.com.example.android.bulletpoints.ui.DetailActivity;
+import app.com.example.android.bulletpoints.ui.MainActivity;
 
 /**
  * Created by Steven on 17/05/2016 using Tutorial by Dharmang Soni
@@ -20,16 +21,22 @@ public class WidgetCollectionProvider extends AppWidgetProvider {
     public static final String ACTION_LAUNCH = "action_launch";
 
     @Override
-    public void onReceive(Context context, Intent intent) {
-        super.onReceive(context, intent);
-    }
-
-    @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        boolean isTablet = context.getResources().getBoolean(R.bool.tablet);
+
         for (int widgetId : appWidgetIds) {
             RemoteViews view = initViews(context, appWidgetManager, widgetId);
+            Intent intent;
 
-            Intent intent = new Intent(context, DetailActivity.class);
+            if (isTablet) {
+                // If the app is running in tablet mode then the MainActivity will handle loading
+                // both fragments
+                intent = new Intent(context, MainActivity.class);
+            } else {
+                // Otherwise open the article's detail page directly
+                intent = new Intent(context, DetailActivity.class);
+            }
+
             intent.setAction(ACTION_LAUNCH);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);

@@ -34,13 +34,13 @@ import app.com.example.android.bulletpoints.data.ArticleProvider;
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
-
     private final static String TAG = MainActivityFragment.class.getSimpleName();
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ArticleAdaptor mArticleAdaptor;
     private static Bundle mListState;
     private static Tracker mTracker;
+    public boolean mIsTablet;
 
     private static final String LAYOUT_STATE_KEY = "layout_state_key";
     public static final String LAYOUT_POSITION_KEY = "layout_position_key";
@@ -64,11 +64,19 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     public MainActivityFragment() {
     }
 
+    /**
+     * Callback that checks if the app was launched by the widget. Used for Tablet view launches.
+     */
+    public interface widgetLaunchCallback {
+        void onWidgetLaunch();
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mIsTablet = getResources().getBoolean(R.bool.tablet);
 
-        // Obtain the shared Tracker instance.
+        // Obtain the shared Tracker instance
         App application = (App) getActivity().getApplication();
         mTracker = application.getDefaultTracker();
     }
@@ -86,12 +94,15 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             }
         });
 
-        // Banner Ad
-        AdView mAdView = (AdView) root.findViewById(R.id.listAdView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-        mAdView.loadAd(adRequest);
+        // The tablet version has one ad that shows via MainActivity so don't load this one
+        if (!mIsTablet) {
+            // Banner Ad
+            AdView mAdView = (AdView) root.findViewById(R.id.listAdView);
+            AdRequest adRequest = new AdRequest.Builder()
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .build();
+            mAdView.loadAd(adRequest);
+        }
 
         if (savedInstanceState == null) {
             fetchData();
@@ -126,8 +137,18 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 manager.onRestoreInstanceState(listState);
             }
         }
+
+        if (mIsTablet) {
+            // If the app is running on a tablet and is launched via the widget then some specific
+            // logic is handled by the callback
+            ((widgetLaunchCallback) getActivity()).onWidgetLaunch();
+        }
     }
 
+    /**
+     * Method used by the swipeRefreshLayout to handle refreshing the data and resetting the
+     * loading icon
+     */
     private void refresh() {
         mSwipeRefreshLayout.setRefreshing(true);
         if (Utilities.isNetworkAvailable(getContext())) {
@@ -171,6 +192,9 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         mRecyclerView.setAdapter(null);
     }
 
+    /**
+     * Update the database with the latest data
+     */
     public void fetchData() {
         ArticleDataFetcher articleDataFetcher = new ArticleDataFetcher(getContext());
         articleDataFetcher.execute(getString(R.string.rss_sky_news_world));

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import com.google.android.gms.analytics.Tracker;
 
 import app.com.example.android.bulletpoints.R;
 import app.com.example.android.bulletpoints.ui.DetailActivity;
+import app.com.example.android.bulletpoints.ui.DetailActivityFragment;
+import app.com.example.android.bulletpoints.ui.MainActivity;
 import app.com.example.android.bulletpoints.ui.MainActivityFragment;
 
 /**
@@ -30,6 +33,7 @@ public class ArticleAdaptor extends RecyclerView.Adapter<ArticleAdaptor.ViewHold
     private final Tracker tracker;
     private Typeface robotoReg;
     private Typeface robotoThin;
+    public boolean mIsTablet;
 
     public ArticleAdaptor(Context context, Cursor cursor, Tracker tracker) {
         robotoReg = Typeface.createFromAsset(context.getResources().getAssets(), "Roboto-Regular.ttf");
@@ -37,6 +41,8 @@ public class ArticleAdaptor extends RecyclerView.Adapter<ArticleAdaptor.ViewHold
         this.context = context;
         this.cursor = cursor;
         this.tracker = tracker;
+
+        mIsTablet = context.getResources().getBoolean(R.bool.tablet);
     }
 
     @Override
@@ -54,10 +60,27 @@ public class ArticleAdaptor extends RecyclerView.Adapter<ArticleAdaptor.ViewHold
                         .setLabel(context.getString(R.string.ga_lbl_sky_world))
                         .build());
 
-                Intent intent = new Intent(context, DetailActivity.class);
-                intent.putExtra(MainActivityFragment.LAYOUT_POSITION_KEY,
-                        getItemId(viewHolder.getAdapterPosition()));
-                context.startActivity(intent);
+                if (mIsTablet) {
+                    // If the app is running on a tablet then the adapter needs to load the fragment
+                    // alongside the list
+                    final MainActivity activity = (MainActivity) context;
+
+                    Bundle args = new Bundle();
+                    args.putLong(MainActivityFragment.LAYOUT_POSITION_KEY,
+                            getItemId(viewHolder.getAdapterPosition()));
+
+                    DetailActivityFragment fragment = new DetailActivityFragment();
+                    fragment.setArguments(args);
+
+                    activity.getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.activity_detail, fragment)
+                            .commit();
+                } else {
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra(MainActivityFragment.LAYOUT_POSITION_KEY,
+                            getItemId(viewHolder.getAdapterPosition()));
+                    context.startActivity(intent);
+                }
             }
         });
 
