@@ -42,8 +42,8 @@ public class BulletPointWizard {
      * Main method that splits out the body into it's components and strips out the most useful
      * sentences to summarise the text.
      *
-     * @param body the text to summarise into bulletpoints
-     * @return the      bulletpoints as an array
+     * @param body  the text to summarise into bulletpoints
+     * @return      the bulletpoints as an array
      */
     public String[][] getBulletPoints(String body) {
 
@@ -109,11 +109,11 @@ public class BulletPointWizard {
     /**
      * Checks if the new sentence is a better candidate than the old sentence.
      *
-     * @param sentence the current best scoring sentence
-     * @param scores   a map of all the scores
-     * @param text     the contending sentence to check against
-     * @return <code>true</code> if the new sentence is a better candidate than the
-     * current by having a lower score. <code>false</code> otherwise.
+     * @param sentence  the current best scoring sentence
+     * @param scores    a map of all the scores
+     * @param text      the contending sentence to check against
+     * @return          <code>true</code> if the new sentence is a better candidate than the
+     *                  current by having a lower score. <code>false</code> otherwise.
      */
     private boolean isNewChoice(String sentence, Map<String, Integer> scores, String text) {
         return sentence.equals("") || scores.get(text) < scores.get(sentence);
@@ -123,8 +123,8 @@ public class BulletPointWizard {
     /**
      * Takes in an array of words and maps them with the amount of times they appear in the array.
      *
-     * @param elements all the words to work out the occurrences for
-     * @return map of all the unique elements and their score.
+     * @param elements  all the words to work out the occurrences for
+     * @return          map of all the unique elements and their score.
      */
     private Map<String, Integer> countOccurrences(String[] elements) {
         Map<String, Integer> map = new HashMap<>();
@@ -143,9 +143,9 @@ public class BulletPointWizard {
     /**
      * Uses the score of each word to give a score to each sentence
      *
-     * @param sentences  an ArrayList of sentence
-     * @param wordScores a score of every word in the text
-     * @return map of all the sentences and their score.
+     * @param sentences     an ArrayList of sentence
+     * @param wordScores    a score of every word in the text
+     * @return              map of all the sentences and their score.
      */
     private Map<String, Integer> scoreSentences(ArrayList<String> sentences,
                                                 Map<String, Integer> wordScores) {
@@ -172,8 +172,8 @@ public class BulletPointWizard {
      * from http://stackoverflow.com/questions/2687012/split-string-into-sentences. Change to
      * clean the results.
      *
-     * @param text the body of text to split up
-     * @return an ArrayList of sentences
+     * @param text      the body of text to split up
+     * @return          an ArrayList of sentences
      */
     private ArrayList<String> getSentences(String text) {
         ArrayList<String> sentences = new ArrayList<>();
@@ -197,8 +197,8 @@ public class BulletPointWizard {
     /**
      * Removes HTML escape characters so that it can be parsed properly.
      *
-     * @param body the body of text to clean
-     * @return the cleaned body
+     * @param body      the body of text to clean
+     * @return          the cleaned body
      */
     private String removeHtmlArtifacts(String body) {
         String[] UNBREAKABLE = {"\u00A0", " "};
@@ -224,8 +224,8 @@ public class BulletPointWizard {
      * Loops through an ArrayList of strings and removes them if they meet the filter criteria
      * in the isFiltered method.
      *
-     * @param strings an ArrayList of strings that need to be filtered
-     * @return the filtered ArrayList of strings
+     * @param strings   an ArrayList of strings that need to be filtered
+     * @return          the filtered ArrayList of strings
      */
     private ArrayList<String> filterExtremeStrings(ArrayList<String> strings) {
         if (strings.size() > BULLETS_NUM) {
