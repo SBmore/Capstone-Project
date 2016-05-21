@@ -207,10 +207,14 @@ public class BulletPointWizard {
         String[] IMAGE = {"[object Object]", ""};
         String[] AMPERSAND = {"&amp;", "&"};
         String[] APOSTROPHE = {"&#39;", "'"};
+        String[] TAGOPEN = {"&lt;a&gt;", "'"};
+        String[] TAGCLOSE = {"&lt;/a&gt;", "'"};
+        String[] BOLDOPEN = {"&lt;strong&gt;", "'"};
+        String[] BOLDCLOSE = {"&lt;/strong&gt;", "'"};
         String[] NEWLINE1 = {".,", ".\n"};
         String[] NEWLINE2 = {". ,", ".\n"};
-        String[][] artifacts = {UNBREAKABLE, QUOTE, QUOTE_END, IMAGE,
-                AMPERSAND, APOSTROPHE, NEWLINE1, NEWLINE2};
+        String[][] artifacts = {UNBREAKABLE, QUOTE, QUOTE_END, IMAGE, AMPERSAND, APOSTROPHE,
+                TAGOPEN, TAGCLOSE, BOLDOPEN, BOLDCLOSE, NEWLINE1, NEWLINE2};
 
         for (int i = 0; i < artifacts.length; i += 1) {
             if (body.contains(artifacts[i][0])) {
@@ -277,7 +281,11 @@ public class BulletPointWizard {
 
         for (int i = 0; i < num; i += 1) {
             if (index + i < sentences.size()) {
-                moreDetail += sentences.get(index + i) + "\n\n";
+                try {
+                    moreDetail += sentences.get(index + i) + "\n\n";
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    moreDetail = "No further detail is available";
+                }
             }
         }
 
