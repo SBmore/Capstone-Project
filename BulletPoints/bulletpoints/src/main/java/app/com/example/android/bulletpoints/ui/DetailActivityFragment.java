@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
@@ -261,6 +262,7 @@ public class DetailActivityFragment extends Fragment {
         String tag = "paragraph";
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         DetailParagraphFragment paragraph = DetailParagraphFragment.newInstance(text);
+        paragraph.setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Holo_Light_Dialog_NoActionBar);
         paragraph.show(fragmentManager, tag);
     }
 }
