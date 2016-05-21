@@ -1,9 +1,11 @@
 package app.com.example.android.bulletpoints.data;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -45,6 +47,7 @@ public class ArticleAdaptor extends RecyclerView.Adapter<ArticleAdaptor.ViewHold
         mIsTablet = context.getResources().getBoolean(R.bool.tablet);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public ArticleAdaptor.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
@@ -60,11 +63,11 @@ public class ArticleAdaptor extends RecyclerView.Adapter<ArticleAdaptor.ViewHold
                         .setLabel(context.getString(R.string.ga_lbl_sky_world))
                         .build());
 
+                final MainActivity activity = (MainActivity) context;
+
                 if (mIsTablet) {
                     // If the app is running on a tablet then the adapter needs to load the fragment
                     // alongside the list
-                    final MainActivity activity = (MainActivity) context;
-
                     Bundle args = new Bundle();
                     args.putLong(MainActivityFragment.LAYOUT_POSITION_KEY,
                             getItemId(viewHolder.getAdapterPosition()));
@@ -79,7 +82,14 @@ public class ArticleAdaptor extends RecyclerView.Adapter<ArticleAdaptor.ViewHold
                     Intent intent = new Intent(context, DetailActivity.class);
                     intent.putExtra(MainActivityFragment.LAYOUT_POSITION_KEY,
                             getItemId(viewHolder.getAdapterPosition()));
-                    context.startActivity(intent);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(activity);
+                        Bundle bundle = options.toBundle();
+
+                        context.startActivity(intent, bundle);
+                    } else {
+                        context.startActivity(intent);
+                    }
                 }
             }
         });

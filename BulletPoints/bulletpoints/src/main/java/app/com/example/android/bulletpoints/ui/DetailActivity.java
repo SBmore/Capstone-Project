@@ -1,5 +1,6 @@
 package app.com.example.android.bulletpoints.ui;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -15,6 +16,10 @@ public class DetailActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             DetailActivityFragment fragment = new DetailActivityFragment();
             fragment.setArguments(getIntent().getExtras());
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                postponeEnterTransition();
+            }
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.activity_detail, fragment)

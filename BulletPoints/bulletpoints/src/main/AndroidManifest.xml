@@ -38,7 +38,9 @@
                 android:resource="@xml/widget_collection_provider" />
         </receiver>
 
-        <activity android:name=".ui.DetailActivity" />
+        <activity
+            android:name=".ui.DetailActivity"
+            android:theme="@style/AppTheme.Detail" />
 
         <service
             android:name=".widget.WidgetCollectionService"

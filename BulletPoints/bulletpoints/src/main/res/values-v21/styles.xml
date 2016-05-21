@@ -1,8 +1,16 @@
 <resources>
-
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowReenterTransition">@android:transition/slide_bottom</item>
+    </style>
+
+    <style name="AppTheme.Detail">
+        <item name="android:windowAllowEnterTransitionOverlap">false</item>
+        <item name="android:windowExitTransition">@transition/transition_detail</item>
+        <item name="android:windowEnterTransition">@transition/transition_detail</item>
     </style>
 </resources>
