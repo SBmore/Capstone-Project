@@ -33,7 +33,7 @@ public class QueryHelper {
         return context.getContentResolver().query(
                 ArticleProvider.Articles.CONTENT_URI,
                 cols,
-                null,
+                ArticleContract.ArticleColumns.BODY + " IS NOT NULL",
                 null,
                 sortOrder + limit);
     }
