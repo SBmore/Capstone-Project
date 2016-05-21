@@ -42,7 +42,8 @@
     <dimen name="bulletpoint_margin">24dp</dimen>
     <dimen name="bulletpoint_item_top">8dp</dimen>
     <dimen name="bulletpoint_item_bottom">8dp</dimen>
-    <dimen name="bulletpoint_item_start">16dp</dimen>
+    <dimen name="bulletpoint_item_start">32dp</dimen>
+    <dimen name="bulletpoint_item_text_start">16dp</dimen>
     <dimen name="bulletpoint_item_end">16dp</dimen>
     <dimen name="bulletpoint_bullet_size">52sp</dimen>
     <dimen name="bulletpoint_text_size">12sp</dimen>

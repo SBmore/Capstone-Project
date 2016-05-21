@@ -1,0 +1,8 @@
+<resources>
+    <dimen name="tablet_detail_panel_top_margin">104dp</dimen>
+    <dimen name="bulletpoint_margin">104dp</dimen>
+    <dimen name="bulletpoint_block_bottom">104dp</dimen>
+    <dimen name="bulletpoint_bullet_size">38sp</dimen>
+    <dimen name="list_start_margin">52dp</dimen>
+    <dimen name="list_end_margin">52dp</dimen>
+</resources>

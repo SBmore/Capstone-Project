@@ -6,4 +6,50 @@
 
     <integer name="list_column_count">1</integer>
 
+    <dimen name="article_height">206dp</dimen>
+
+    <!--FAB -->
+    <dimen name="fab_margin">24dp</dimen>
+
+    <!-- List item text padding -->
+    <dimen name="article_title_start">16dp</dimen>
+    <dimen name="article_title_end">16dp</dimen>
+    <dimen name="article_title_top">16dp</dimen>
+    <dimen name="article_description_start">16dp</dimen>
+    <dimen name="article_description_end">16dp</dimen>
+    <dimen name="article_description_bottom">16dp</dimen>
+    <dimen name="list_start_margin">24dp</dimen>
+    <dimen name="list_end_margin">24dp</dimen>
+
+    <!-- Detail -->
+    <dimen name="tablet_detail_image_height">420dp</dimen>
+    <dimen name="tablet_detail_panel_top_margin">292dp</dimen>
+
+    <!-- bars -->
+    <dimen name="detail_bar_title_top">24dp</dimen>
+    <dimen name="detail_bar_subtitle_bottom">24dp</dimen>
+    <dimen name="detail_bar_text_margin">48dp</dimen>
+
+    <!-- Bulletpoint margins / sizes -->
+    <dimen name="bulletpoint_margin">52dp</dimen>
+    <dimen name="bulletpoint_item_top">8dp</dimen>
+    <dimen name="bulletpoint_item_bottom">8dp</dimen>
+    <dimen name="bulletpoint_item_start">48dp</dimen>
+    <dimen name="bulletpoint_item_text_start">24dp</dimen>
+    <dimen name="bulletpoint_item_end">24dp</dimen>
+    <dimen name="bulletpoint_bullet_size">48sp</dimen>
+    <dimen name="bulletpoint_text_size">14sp</dimen>
+    <dimen name="bulletpoint_block_bottom">140dp</dimen>
+
+    <!-- text sizes -->
+    <dimen name="list_title_text_size">16sp</dimen>
+    <dimen name="list_subtitle_text_size">14sp</dimen>
+    <dimen name="detail_title_text_size">16sp</dimen>
+    <dimen name="detail_subtitle_text_size">12sp</dimen>
+
+    <!-- adverts -->
+    <dimen name="list_advert_bottom_margin">24dp</dimen>
+
+    <!-- Paragraph -->
+    <dimen name="paragraph_padding">24dp</dimen>
 </resources>

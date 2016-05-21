@@ -7,7 +7,7 @@
     android:orientation="horizontal">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:paddingBottom="@dimen/bulletpoint_item_bottom"
@@ -26,9 +26,9 @@
         android:layout_gravity="center_vertical"
         android:paddingBottom="@dimen/bulletpoint_item_bottom"
         android:paddingEnd="@dimen/bulletpoint_item_end"
-        android:paddingLeft="@dimen/bulletpoint_item_start"
+        android:paddingLeft="@dimen/bulletpoint_item_text_start"
         android:paddingRight="@dimen/bulletpoint_item_end"
-        android:paddingStart="@dimen/bulletpoint_item_start"
+        android:paddingStart="@dimen/bulletpoint_item_text_start"
         android:paddingTop="@dimen/bulletpoint_item_top"
         android:textSize="@dimen/bulletpoint_text_size" />
 </LinearLayout>

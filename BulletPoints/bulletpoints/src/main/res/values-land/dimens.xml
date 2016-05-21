@@ -14,6 +14,8 @@
     <dimen name="detail_photo_height">320dp</dimen>
     <dimen name="bulletpoint_block_bottom">70dp</dimen>
 
+    <dimen name="tablet_detail_panel_top_margin">56dp</dimen>
+
     <dimen name="logo_top">4dp</dimen>
 
     <integer name="list_column_count">2</integer>
