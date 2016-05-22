@@ -228,15 +228,6 @@ public class DetailActivityFragment extends Fragment {
     }
 
     @Override
-    public void onDestroyView() {
-        if (mImageView != null) {
-            mImageView.setImageResource(0);
-            mImageView.setContentDescription("");
-        }
-        super.onDestroyView();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
 
