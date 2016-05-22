@@ -24,7 +24,7 @@
 
         <TextView
             android:id="@+id/widget_app_title"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/widget_title_width"
             android:layout_height="wrap_content"
             android:layout_weight="@integer/widget_titleview_weight"
             android:layout_gravity="center"
