@@ -196,7 +196,11 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
      * Update the database with the latest data
      */
     public void fetchData() {
-        ArticleDataFetcher articleDataFetcher = new ArticleDataFetcher(getContext());
-        articleDataFetcher.execute(getString(R.string.rss_sky_news_world));
+        if (Utilities.isNetworkAvailable(getContext())) {
+            ArticleDataFetcher articleDataFetcher = new ArticleDataFetcher(getContext());
+            articleDataFetcher.execute(getString(R.string.rss_sky_news_world));
+        } else {
+            Utilities.toastNoNetword(getContext());
+        }
     }
 }
