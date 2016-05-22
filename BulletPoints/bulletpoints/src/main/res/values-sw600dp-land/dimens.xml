@@ -5,4 +5,7 @@
     <dimen name="bulletpoint_bullet_size">38sp</dimen>
     <dimen name="list_start_margin">52dp</dimen>
     <dimen name="list_end_margin">52dp</dimen>
+
+    <dimen name="logo_start">52dp</dimen>
+    <dimen name="logo_end">52dp</dimen>
 </resources>
