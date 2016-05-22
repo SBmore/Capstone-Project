@@ -22,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:importantForAccessibility="no"
         android:textDirection="locale"
         android:paddingBottom="@dimen/bulletpoint_item_bottom"
         android:paddingEnd="@dimen/bulletpoint_item_end"
