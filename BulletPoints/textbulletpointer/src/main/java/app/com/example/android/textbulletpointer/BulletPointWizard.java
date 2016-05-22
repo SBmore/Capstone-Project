@@ -46,62 +46,85 @@ public class BulletPointWizard {
      * @return      the bulletpoints as an array
      */
     public String[][] getBulletPoints(String body) {
-
+        int breakPoint  = 4;
         body = removeHtmlArtifacts(body);
         String[] words = body.replaceAll(CHAR_REPLACE_REGEX, "").toLowerCase().split(WORD_SPLIT_REGEX);
 
-        String[][] bulletpoints = new String[5][2];
-
         ArrayList<String> sentences = getSentences(body);
         sentences = filterExtremeStrings(sentences);
-        // set first bulletpoint and its extra detail
-        bulletpoints[0][0] = sentences.get(0);
-        bulletpoints[0][1] = getMoreDetail(sentences, 0);
-
-        bulletpoints[4][0] = sentences.get(sentences.size() - 1);
-        bulletpoints[4][1] = getMoreDetail(sentences, sentences.size() - 1);
-
-        sentences.remove(0);
-        sentences.remove(sentences.size() - 1);
 
         // get unique words and score them based on occurrences in text body
         Map<String, Integer> wordScores = countOccurrences(words);
         Map<String, Integer> sentenceScores = scoreSentences(sentences, wordScores);
 
+        // Give all the bulletpoints a default value to avoid blanks
+        String[][] bulletpoints = setDefaults(sentences, sentenceScores);
+
         double oneThird = sentences.size() / (double) 3;
         int beginningNum = (int) Math.ceil(oneThird);
         int endNum = (int) Math.ceil(oneThird);
 
-        ArrayList<String> snapshot = new ArrayList<String>(sentenceScores.keySet());
-
-        // Give all the bulletpoints a default value to avoid blanks
-        bulletpoints[1][0] = snapshot.get(0);
-        bulletpoints[1][1] = getMoreDetail(snapshot, 0);
-        bulletpoints[2][0] = snapshot.get(sentences.size() / 2);
-        bulletpoints[2][1] = getMoreDetail(snapshot, sentences.size() / 2);
-        bulletpoints[3][0] = snapshot.get(snapshot.size() - 1);
-        bulletpoints[3][1] = getMoreDetail(snapshot, snapshot.size() - 1);
-
-        int num = 0;
-        for (String sentence : sentenceScores.keySet()) {
-            if (num < beginningNum) {
-                // the beginning (pick 1)
-                if (isNewChoice(bulletpoints[1][0], sentenceScores, sentence)) {
-                    bulletpoints[1][0] = sentence;
+        // When the amount of bulletpoints is 4 or less the picking logic breaks down so just
+        // stick with the defaults
+        if (sentences.size() > breakPoint) {
+            int num = 0;
+            for (String sentence : sentenceScores.keySet()) {
+                if (num < beginningNum) {
+                    // the beginning (pick 1)
+                    if (isNewChoice(bulletpoints[1][0], sentenceScores, sentence)) {
+                        bulletpoints[1][0] = sentence;
+                        bulletpoints[1][1] = getMoreDetail(sentences, num);
+                    }
+                } else if (num > beginningNum + endNum) {
+                    // the end (pick 1)
+                    if (isNewChoice(bulletpoints[3][0], sentenceScores, sentence)) {
+                        bulletpoints[3][0] = sentence;
+                        bulletpoints[3][1] = getMoreDetail(sentences, num);
+                    }
+                } else {
+                    // the middle (pick 1)
+                    if (isNewChoice(bulletpoints[2][0], sentenceScores, sentence)) {
+                        bulletpoints[2][0] = sentence;
+                        bulletpoints[2][1] = getMoreDetail(sentences, num);
+                    }
                 }
-            } else if (num > beginningNum + endNum) {
-                // the end (pick 1)
-                if (isNewChoice(bulletpoints[3][0], sentenceScores, sentence)) {
-                    bulletpoints[3][0] = sentence;
-                }
-            } else {
-                // the middle (pick 1)
-                if (isNewChoice(bulletpoints[2][0], sentenceScores, sentence)) {
-                    bulletpoints[2][0] = sentence;
-                }
+                num += 1;
             }
-            num += 1;
         }
+
+        return bulletpoints;
+    }
+
+    /**
+     * The bulletpoints should be set with default values so if anything goes wrong with scoring
+     * and picking then there will still be something for the user to view.
+     *
+     * @param sentences         an arraylist of the sentence
+     * @param sentenceScores    a map of the sentences and their score
+     * @return                  the array of the default bulletpoints and their extra detail
+     */
+    private String[][] setDefaults(ArrayList<String> sentences, Map<String, Integer> sentenceScores) {
+        String[][] bulletpoints = new String[5][2];
+
+        // set first bulletpoint and its extra detail
+        bulletpoints[0][0] = sentences.get(0);
+        bulletpoints[0][1] = getMoreDetail(sentences, 0);
+
+        // set last bulletpoint and its extra detail
+        bulletpoints[4][0] = sentences.get(sentences.size() - 1);
+        bulletpoints[4][1] = getMoreDetail(sentences, sentences.size() - 1);
+
+        sentenceScores.remove(sentences.get(0));
+        sentences.remove(0);
+        sentenceScores.remove(sentences.get(sentences.size() - 1));
+        sentences.remove(sentences.size() - 1);
+
+        bulletpoints[1][0] = sentences.get(0);
+        bulletpoints[1][1] = getMoreDetail(sentences, 0);
+        bulletpoints[2][0] = sentences.get(sentences.size() / 2);
+        bulletpoints[2][1] = getMoreDetail(sentences, sentences.size() / 2);
+        bulletpoints[3][0] = sentences.get(sentences.size() - 1);
+        bulletpoints[3][1] = getMoreDetail(sentences, sentences.size() - 1);
 
         return bulletpoints;
     }
