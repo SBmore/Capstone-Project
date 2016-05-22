@@ -207,18 +207,26 @@ public class BulletPointWizard {
         String[] IMAGE = {"[object Object]", ""};
         String[] AMPERSAND = {"&amp;", "&"};
         String[] APOSTROPHE = {"&#39;", "'"};
-        String[] TAGOPEN = {"&lt;a&gt;", "'"};
-        String[] TAGCLOSE = {"&lt;/a&gt;", "'"};
-        String[] BOLDOPEN = {"&lt;strong&gt;", "'"};
-        String[] BOLDCLOSE = {"&lt;/strong&gt;", "'"};
+        String[] TAGOPEN = {"&lt;a&gt;", ""};
+        String[] TAGCLOSE = {"&lt;/a&gt;", ""};
+        String[] BOLDOPEN = {"&lt;strong&gt;", ""};
+        String[] BOLDCLOSE = {"&lt;/strong&gt;", ""};
+        String[] FAUXBULLETPOINT = {"::", "\n"};
         String[] NEWLINE1 = {".,", ".\n"};
         String[] NEWLINE2 = {". ,", ".\n"};
         String[][] artifacts = {UNBREAKABLE, QUOTE, QUOTE_END, IMAGE, AMPERSAND, APOSTROPHE,
-                TAGOPEN, TAGCLOSE, BOLDOPEN, BOLDCLOSE, NEWLINE1, NEWLINE2};
+                TAGOPEN, TAGCLOSE, BOLDOPEN, BOLDCLOSE, FAUXBULLETPOINT, NEWLINE1, NEWLINE2};
 
-        for (int i = 0; i < artifacts.length; i += 1) {
-            if (body.contains(artifacts[i][0])) {
-                body = body.replace(artifacts[i][0], artifacts[i][1]);
+        // remove links and underlined sentences (titles)
+        String[] regexes = {"&lt;a href=.*?&gt;", "&lt;u&gt;.*?&lt;/u&gt;"};
+
+        for (String regex : regexes) {
+            body = body.replaceAll(regex, "");
+        }
+
+        for (String[] artifact : artifacts) {
+            if (body.contains(artifact[0])) {
+                body = body.replace(artifact[0], artifact[1]);
             }
         }
         return body;
@@ -245,18 +253,18 @@ public class BulletPointWizard {
     }
 
     /**
-     * Sets whether the provided string should be removed or not besed on whether it is shorter
-     * than MIN_LEN, longer than the MAX_LEN, or contains 'href=', unless doing so would reduce
-     * the number of strings to less than BULLETS_NUM.
+     * Sets whether the provided string should be removed or not based on whether it is shorter
+     * than MIN_LEN, longer than the MAX_LEN, unless doing so would reduce the number of strings
+     * to less than BULLETS_NUM.
      *
-     * @param sentence     the sentence to test for filtering
-     * @param numOfStrings the amount of strings to no
-     * @return
+     * @param sentence      the sentence to test for filtering
+     * @param numOfStrings  the amount of strings to no
+     * @return              <code>true</code> if the sentence should be kept. <code>false</code>
+     *                      otherwise.
      */
     private boolean isFiltered(String sentence, int numOfStrings) {
         int stringLen = sentence.length();
-        return ((stringLen < MIN_LEN || stringLen > MAX_LEN || sentence.contains("href=")) &&
-                numOfStrings > BULLETS_NUM);
+        return ((stringLen < MIN_LEN || stringLen > MAX_LEN) && numOfStrings > BULLETS_NUM);
     }
 
     /**
@@ -268,7 +276,8 @@ public class BulletPointWizard {
      * @return          the detail generated
      */
     private String getMoreDetail(ArrayList<String> sentences, int index) {
-        int num = 3;
+        final String noDetail = "No further detail is available";
+        final int num = 3;
         String moreDetail = "";
 
         if (index > 0 && index < sentences.size() - 1) {
@@ -284,7 +293,7 @@ public class BulletPointWizard {
                 try {
                     moreDetail += sentences.get(index + i) + "\n\n";
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    moreDetail = "No further detail is available";
+                    moreDetail = noDetail;
                 }
             }
         }
