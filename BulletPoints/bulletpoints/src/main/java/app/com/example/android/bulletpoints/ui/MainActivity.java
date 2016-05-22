@@ -76,6 +76,11 @@ public class MainActivity extends AppCompatActivity implements DetailActivityFra
                 }
             });
         }
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("");
+        }
+
         return true;
     }
 
