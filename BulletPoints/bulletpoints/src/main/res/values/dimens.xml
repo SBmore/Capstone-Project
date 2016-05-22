@@ -50,6 +50,7 @@
     <dimen name="bulletpoint_text_size">12sp</dimen>
     <dimen name="bulletpoint_block_bottom">140dp</dimen>
     <dimen name="bulletpoint_divider">1dp</dimen>
+    <dimen name="article_photo_margin_top">0dp</dimen>
 
     <!-- Paragraph -->
     <dimen name="paragraph_padding">16dp</dimen>

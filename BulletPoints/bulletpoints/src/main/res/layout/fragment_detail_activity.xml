@@ -22,7 +22,7 @@
                 android:id="@+id/article_photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="?actionBarSize"
+                android:layout_marginTop="@dimen/article_photo_margin_top"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"/>
 
