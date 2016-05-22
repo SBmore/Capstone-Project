@@ -30,6 +30,7 @@
             android:layout_gravity="center"
             android:layout_margin="@dimen/widget_title_margin"
             android:text="@string/app_name"
+            android:textDirection="locale"
             android:textColor="@color/grey_800"
             android:textStyle="bold" />
     </LinearLayout>
