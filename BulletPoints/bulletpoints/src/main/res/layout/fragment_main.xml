@@ -31,8 +31,6 @@
             android:paddingBottom="@dimen/list_block_bottom_padding"
             android:clipToPadding="false"
             android:paddingEnd="@dimen/list_end_margin"
-            android:paddingLeft="@dimen/list_end_margin"
-            android:paddingRight="@dimen/list_start_margin"
             android:paddingStart="@dimen/list_start_margin" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
