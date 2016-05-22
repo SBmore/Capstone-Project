@@ -27,7 +27,9 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/list_block_bottom_padding"
+            android:clipToPadding="false"
             android:paddingEnd="@dimen/list_end_margin"
             android:paddingLeft="@dimen/list_end_margin"
             android:paddingRight="@dimen/list_start_margin"

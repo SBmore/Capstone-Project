@@ -21,6 +21,7 @@
     <dimen name="list_item_top_margin">24dp</dimen>
     <dimen name="list_item_bottom_margin">0dp</dimen>
     <dimen name="article_height">184dp</dimen>
+    <dimen name="list_block_bottom_padding">104dp</dimen>
 
     <!-- List item text padding -->
     <dimen name="article_title_start">8dp</dimen>
