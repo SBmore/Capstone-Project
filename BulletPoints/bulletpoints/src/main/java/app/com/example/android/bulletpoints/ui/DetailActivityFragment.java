@@ -140,7 +140,9 @@ public class DetailActivityFragment extends Fragment {
                     root.getViewTreeObserver().removeOnPreDrawListener(this);
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getActivity().startPostponedEnterTransition();
+                        if (getActivity() != null) {
+                            getActivity().startPostponedEnterTransition();
+                        }
                     }
 
                     return true;
