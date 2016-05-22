@@ -23,7 +23,7 @@ public class ArticleContract {
         @DataType(DataType.Type.TEXT)
         String DESCRIPTION = "description";
 
-        @DataType(DataType.Type.TEXT) @NotNull @Unique
+        @DataType(DataType.Type.TEXT) @NotNull
         String LINK = "link";
 
         @DataType(DataType.Type.INTEGER) @NotNull

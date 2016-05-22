@@ -89,6 +89,8 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
 
                     contentValues.put(ArticleContract.ArticleColumns.DESCRIPTION, description);
                     contentValues.put(ArticleContract.ArticleColumns.PUB_DATE, pubDate);
+                    contentValues.put(ArticleContract.ArticleColumns.LINK,
+                            Utilities.shortenUrl(mContext, link.toString()));
                     // add default low res thumbnail in case the full size image doesn't load
                     contentValues.put(ArticleContract.ArticleColumns.IMG_URL, thumbnail);
 
@@ -97,8 +99,6 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
                         Log.v(TAG, "Updated main: " + num);
                     } else {
                         contentValues.put(ArticleContract.ArticleColumns.TITLE, title);
-                        contentValues.put(ArticleContract.ArticleColumns.LINK,
-                                Utilities.shortenUrl(mContext, link.toString()));
                         QueryHelper.insert(mContext, contentValues);
                     }
 

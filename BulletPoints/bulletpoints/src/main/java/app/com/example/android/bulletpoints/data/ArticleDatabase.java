@@ -8,7 +8,7 @@ import net.simonvt.schematic.annotation.Table;
  */
 @Database(version = ArticleDatabase.VERSION)
 public final class ArticleDatabase {
-    public static final int VERSION = 4;
+    public static final int VERSION = 5;
 
     @Table(ArticleContract.ArticleColumns.class) public static final String ARTICLES = "lists";
 }
