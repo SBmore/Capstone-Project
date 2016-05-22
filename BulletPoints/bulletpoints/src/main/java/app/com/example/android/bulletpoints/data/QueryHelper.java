@@ -53,4 +53,11 @@ public class QueryHelper {
                 value
         );
     }
+
+    public static int bulkInsert(Context context, ContentValues[] values) {
+        return context.getContentResolver().bulkInsert(
+                ArticleProvider.Articles.CONTENT_URI,
+                values
+        );
+    }
 }
