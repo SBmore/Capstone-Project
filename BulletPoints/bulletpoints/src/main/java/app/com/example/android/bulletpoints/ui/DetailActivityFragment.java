@@ -38,12 +38,13 @@ import app.com.example.android.bulletpoints.data.QueryHelper;
 public class DetailActivityFragment extends Fragment {
     private final static String TAG = DetailActivityFragment.class.getSimpleName();
     private final static String SHARE_HASHTAG = "#BulletPoints";
-    public static final int MAX_BULLETPOINTS = 5;
+    private static final int MAX_BULLETPOINTS = 5;
     private ShareActionProvider mShareActionProvider;
     private String mArticleShareText;
     private static Long mId;
     private static Tracker mTracker;
-    public boolean mIsTablet;
+    private boolean mIsTablet;
+    private ImageView mImageView;
 
     private static final String[] ARTICLE_COLUMNS = {
             ArticleContract.ArticleColumns._ID,
@@ -176,9 +177,9 @@ public class DetailActivityFragment extends Fragment {
                 descriptionTextView.setTypeface(robotoReg);
                 descriptionTextView.setText(subtitle);
 
-                ImageView imageView = (ImageView) root.findViewById(R.id.article_photo);
-                imageView.setContentDescription(getString(R.string.image_indicator) + title);
-                Glide.with(getContext()).load(img_url).centerCrop().into(imageView);
+                mImageView = (ImageView) root.findViewById(R.id.article_photo);
+                mImageView.setContentDescription(getString(R.string.image_indicator) + title);
+                Glide.with(getContext()).load(img_url).centerCrop().into(mImageView);
 
                 setBulletpoints(root, cursor);
                 cursor.close();
@@ -224,6 +225,15 @@ public class DetailActivityFragment extends Fragment {
         }
 
         return root;
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mImageView != null) {
+            mImageView.setImageResource(0);
+            mImageView.setContentDescription("");
+        }
+        super.onDestroyView();
     }
 
     @Override
