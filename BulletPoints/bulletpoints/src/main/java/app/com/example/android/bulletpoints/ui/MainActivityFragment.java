@@ -153,7 +153,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         mSwipeRefreshLayout.setRefreshing(true);
         if (Utilities.isNetworkAvailable(getContext())) {
             fetchData();
-            mArticleAdaptor.notifyDataSetChanged();
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             Utilities.toastNoNetword(getContext());
@@ -197,7 +196,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
      */
     public void fetchData() {
         if (Utilities.isNetworkAvailable(getContext())) {
-            ArticleDataFetcher articleDataFetcher = new ArticleDataFetcher(getContext());
+            ArticleDataFetcher articleDataFetcher = new ArticleDataFetcher(getContext(), mArticleAdaptor);
             articleDataFetcher.execute(getString(R.string.rss_sky_news_world));
         } else {
             Utilities.toastNoNetword(getContext());

@@ -35,9 +35,11 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
     private final static String TAG = ArticleDataFetcher.class.getSimpleName();
     private Context mContext;
     private Exception exception;
+    private ArticleAdaptor mArticleAdaptor;
 
-    public ArticleDataFetcher(Context context) {
+    public ArticleDataFetcher(Context context, ArticleAdaptor adaptor) {
         mContext = context;
+        mArticleAdaptor = adaptor;
     }
 
     /**
@@ -180,6 +182,10 @@ public class ArticleDataFetcher extends AsyncTask<String, Void, Boolean> {
     protected void onPostExecute(Boolean success) {
         if (success != null && !success) {
             Utilities.toastNoNetword(mContext);
+        } else {
+            if (mArticleAdaptor != null) {
+                mArticleAdaptor.notifyDataSetChanged();
+            }
         }
     }
 }
