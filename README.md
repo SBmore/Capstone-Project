@@ -5,9 +5,6 @@ Final project for the Android App Developer Nanodegree at Udacity. Demonstrate t
 
 ***Stage 2:*** Build app.
 
-##Note to Reviewer
-The only API key that needs to be inserted is one for Google's URL Shortener API. This is stored in strings.xml under the name 'url_shortener_api_key'.
-
 ##Project Overview
 BulletPoints is an app that lets you keep up with the latest news and articles without having to trudge through the entire thing. BulletPoints presents you with a list of all the top stories that people are talking about and then summarises the content down to 5, easy to digest bullet points. If you feel like you never have time to read to read the full article; or you just want to get the gist, then this is the app for you.
 
