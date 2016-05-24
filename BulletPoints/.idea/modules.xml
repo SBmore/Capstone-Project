@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BulletPoints.iml" filepath="$PROJECT_DIR$/BulletPoints.iml" />
-      <module fileurl="file://$PROJECT_DIR$/bulletpoints/app.iml" filepath="$PROJECT_DIR$/bulletpoints/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/bulletpoints/bulletpoints.iml" filepath="$PROJECT_DIR$/bulletpoints/bulletpoints.iml" />
       <module fileurl="file://$PROJECT_DIR$/textbulletpointer/textbulletpointer.iml" filepath="$PROJECT_DIR$/textbulletpointer/textbulletpointer.iml" />
     </modules>
